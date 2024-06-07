@@ -1,12 +1,12 @@
 #include "DxLib.h"
 #include "math.h"
-#include "Src/Input/Input.h"
-#include "Src/CollisionManager/Collision/Collision.h"
-#include "Src/Player/Player.h"
-#include "Src/Camera/CameraManager.h"
-#include "Src/Scene/PlayScene.h"
-#include "Src/Scene/SceneManager.h"
-#include "Src/Object/Model/Model.h"
+#include "Input/Input.h"
+#include "CollisionManager/Collision/Collision.h"
+#include "Player/Player.h"
+#include "Camera/CameraManager.h"
+#include "Scene/PlayScene.h"
+#include "Scene/SceneManager.h"
+#include "Object/Model/Model.h"
 
 #define	SCREEN_SIZE_X	1280	// X方向の画面サイズを指定
 #define	SCREEN_SIZE_Y	720	// Y方向の画面サイズを指定
