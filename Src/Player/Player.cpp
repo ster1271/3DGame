@@ -2,6 +2,7 @@
 #include "../Input/Input.h"
 #include <math.h>
 #include "../MyLibrary/MyLibrary.h"
+#include "../Draw3D/Draw3D.h"
 
 //定義関連
 static const char PLAYER_MODEL_PATH[] = { "Data/Tank/Tank.x" };		//ファイル名
@@ -81,24 +82,47 @@ void CPlayer::Exit()
 	CModel::Exit();
 }
 
+//描画処理
+void CPlayer::Draw()
+{
+	if (m_iHndl == -1)
+	{
+		return;
+	}
+
+	MV1DrawModel(m_iHndl);
+
+	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
+}
+
 
 //----------------------------
 //毎フレーム呼ぶ処理
 //----------------------------
 void CPlayer::Step(CShotManager& cShotManager)
 {
-	VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
+	//VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
 
-	GetMousePoint(&MousePosX, &MousePosY);
-	VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
+	//GetMousePoint(&MousePosX, &MousePosY);
+	//VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
 
-	VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
-	Move = MyMath::Scale(Move, 0.01f);
+	//VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
+	//Move = MyMath::Scale(Move, 0.01f);
 
-	m_OldPos = m_vPos;
+	//m_OldPos = m_vPos;
+	//m_vRot.y -= Move.y;
+
 
 	//キャラクターの回転
-	m_vRot.y -= Move.y;
+	if (CInput::IsKeyKeep(KEY_INPUT_LEFT))
+	{
+		m_vRot.y -= 0.1f;
+	}
+	else if (CInput::IsKeyKeep(KEY_INPUT_RIGHT))
+	{
+		m_vRot.y += 0.1f;
+	}
+
 
 	//キャラクターの移動
 	float fSpd = 0.0f;

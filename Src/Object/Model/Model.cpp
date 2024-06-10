@@ -68,9 +68,6 @@ void CModel::Draw()
 	}
 
 	MV1DrawModel(m_iHndl);
-
-	
-	//DrawLine3D(m_vPos);
 	
  }
 

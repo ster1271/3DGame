@@ -36,6 +36,9 @@ public:
 	//I—¹ˆ—
 	void Exit();
 
+	//•`‰æˆ—
+	void Draw();
+
 	//–ˆƒtƒŒ[ƒ€ŒÄ‚Ôˆ—
 	void Step(CShotManager& cShotManager);
 
