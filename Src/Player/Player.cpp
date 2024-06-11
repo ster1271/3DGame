@@ -5,7 +5,10 @@
 #include "../Draw3D/Draw3D.h"
 
 //定義関連
-static const char PLAYER_MODEL_PATH[] = { "Data/Tank/Tank.x" };		//ファイル名
+static const char PLAYER_MODEL_PATH[] = { "Data/Tank/Tank.x" };					//ファイル名
+static const char PLAYER_MODEL_FOUND_PATH[] = { "Data/Tank/tank_Found.x" };		//タンクのファイル名(本体)
+static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_Head.x" };		//タンクのファイル名(頭)
+
 static const float ROTATE_SPEED = 0.05f;							//プレイヤーの回転速度
 static const float MOVE_SPEED = 0.5f;								//プレイヤーの移動速度
 
@@ -48,6 +51,7 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 
 	m_vPos = Pos;
 	m_vRot = Rot;
+	vHeadRot = Rot;
 	memset(&vSpeed, 0, sizeof(VECTOR));
 	eState = PLAYER_STATE_NORMAL;
 
@@ -58,7 +62,8 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 //----------------------------
 void CPlayer::Load()
 {
-	LoadModel(PLAYER_MODEL_PATH);
+	LoadModel(PLAYER_MODEL_FOUND_PATH);
+	//HeadHndl = MV1LoadModel(PLAYER_MODEL_HEAD_PATH);
 }
 
 //----------------------------
@@ -89,10 +94,40 @@ void CPlayer::Draw()
 	{
 		return;
 	}
+	if (HeadHndl == -1)
+	{
+		return;
+	}
 
 	MV1DrawModel(m_iHndl);
+	MV1DrawModel(HeadHndl);
 
 	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
+	CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
+}
+
+//更新処理
+void CPlayer::Update()
+{
+	if (m_iHndl == -1)
+	{
+		return;		//モデルの読み込み失敗
+	}
+	if (HeadHndl == -1)
+	{
+		return;
+	}
+
+	MV1SetPosition(m_iHndl, m_vPos);
+	MV1SetRotationXYZ(m_iHndl, m_vRot);
+	MV1SetScale(m_iHndl, m_vScale);
+
+	MV1SetPosition(HeadHndl, m_vPos);
+	MV1SetRotationXYZ(HeadHndl, vHeadRot);
+	MV1SetScale(HeadHndl, m_vScale);
+
+
+	UpdateAnime();
 }
 
 
@@ -101,6 +136,7 @@ void CPlayer::Draw()
 //----------------------------
 void CPlayer::Step(CShotManager& cShotManager)
 {
+	//マウス処理(仮)
 	//VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
 
 	//GetMousePoint(&MousePosX, &MousePosY);
@@ -114,13 +150,13 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 
 	//キャラクターの回転
-	if (CInput::IsKeyKeep(KEY_INPUT_LEFT))
+	if (CInput::IsKeyKeep(KEY_INPUT_A))
 	{
-		m_vRot.y -= 0.1f;
+		m_vRot.y -= 0.01f;
 	}
-	else if (CInput::IsKeyKeep(KEY_INPUT_RIGHT))
+	else if (CInput::IsKeyKeep(KEY_INPUT_D))
 	{
-		m_vRot.y += 0.1f;
+		m_vRot.y += 0.01f;
 	}
 
 

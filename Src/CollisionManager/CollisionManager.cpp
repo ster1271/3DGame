@@ -43,4 +43,12 @@
 	 }
 }
 
- 
+
+ //•¨‘Ì‚Æ‚Ì“–‚½‚è”»’è
+ void CCollisionManager::HitToObject(CPlayer& cPlayer)
+ {
+	 if (CCollision::CheckHitBoxToBox(cPlayer.GetPosition(), VGet(40.0f, 50.0f, 40.0f), VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f)))
+	 {
+
+	 }
+ }

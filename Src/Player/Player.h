@@ -15,6 +15,9 @@ private:
 		PLAYER_STATE_NUM
 	};
 
+	int HeadHndl;
+	VECTOR vHeadRot;		//頭部の回転
+
 	VECTOR vSpeed;			//移動速度
 	tagPlayerState eState;	//プレイヤーの状態
 
@@ -39,9 +42,11 @@ public:
 	//描画処理
 	void Draw();
 
+	//更新処理
+	void Update();
+
 	//毎フレーム呼ぶ処理
 	void Step(CShotManager& cShotManager);
-
 
 	//座標取得
 	inline VECTOR GetPosition() { return m_vPos; }
