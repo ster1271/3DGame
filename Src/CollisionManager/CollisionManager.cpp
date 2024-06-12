@@ -1,3 +1,4 @@
+#include "DxLib.h"
 #include "CollisionManager.h"
 #include "../CollisionManager/Collision/Collision.h"
 
@@ -47,8 +48,81 @@
  //•¨‘Ì‚Æ‚Ì“–‚½‚è”»’è
  void CCollisionManager::HitToObject(CPlayer& cPlayer)
  {
+	 
 	 if (CCollision::CheckHitBoxToBox(cPlayer.GetPosition(), VGet(40.0f, 50.0f, 40.0f), VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f)))
 	 {
+		 VECTOR Puls = VGet(0.0f, 0.0f, 0.0f);
+
+		 
+		 /*XŽ²‚Ì“–‚½‚è”»’è*/
+
+		 ////‰E‚©‚ç“–‚½‚Á‚½Žž
+		 //if (cPlayer.GetGapPositionX() > 0.0f)
+		 //{
+			//Puls.x = 
+		 //}
+		 ////¶‚©‚ç“–‚½‚Á‚½Žž
+		 //else
+		 //{
+			// float puls = 0.0f;
+
+		 //}
+		 
+		 /*void PLAYER::PulsX(int PosX, float Width, )
+		 {
+			 //¶‚©‚ç‚Ì“–‚½‚è”»’è
+			 if (dir == IsLeft)
+			 {
+				 float puls = 0.0f;
+				 puls = (Pos.x + 32.0f) - PosX;
+				 Pos.x -= puls;
+			 }
+			 //‰E‚©‚ç‚Ì“–‚½‚è”»’è
+			 else if (dir == IsRight)
+			 {
+				 float puls = 0.0f;
+				 puls = (PosX + Width) - (Pos.x - 32.0f);
+				 Pos.x += puls;
+			 }
+		 }
+		 */
+
+		 /*YŽ²‚Ì“–‚½‚è”»’è*/
+		 /*
+		 //Y‚Ì“–‚½‚è”»’è
+		void PLAYER::PulsY(int PosY, float Height)
+		 {
+			 //ã•ûŒü‚©‚ç‚Ì“–‚½‚è”»’è
+			 if (YSpeed > 0.0f)
+			 {
+				 float puls = 0.0f;
+				 puls = (Pos.y + 32.0f) - PosY;
+				 Pos.y -= puls;
+				 YSpeed = 0.0f;
+				 JumpCount = 0;
+				 IsJump = false;
+			 }
+			 //‰º•ûŒü‚©‚ç‚Ì“–‚½‚è”»’è
+			 else if (YSpeed < 0.0f)
+			 {
+				 float puls = 0.0f;
+				 puls = (PosY + Height) - (Pos.y - 32.0f);
+				 Pos.y += puls;
+				 YSpeed = -0.5f;
+			 }
+		 }
+		 */
+
+		 //ã‚©‚ç
+
+		 //‰º‚©‚ç
+
+
+		 /*ZŽ²‚Ì“–‚½‚è”»’è*/
+		 //Žè‘O‚©‚ç
+
+		 //‰œ‚©‚ç
+		 
 
 	 }
  }

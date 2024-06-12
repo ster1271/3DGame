@@ -53,6 +53,7 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 	m_vRot = Rot;
 	vHeadRot = Rot;
 	memset(&vSpeed, 0, sizeof(VECTOR));
+	memset(&PosGap, 0, sizeof(VECTOR));
 	eState = PLAYER_STATE_NORMAL;
 
 }
@@ -145,8 +146,18 @@ void CPlayer::Step(CShotManager& cShotManager)
 	//VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
 	//Move = MyMath::Scale(Move, 0.01f);
 
-	//m_OldPos = m_vPos;
 	//m_vRot.y -= Move.y;
+
+	//毎フレーム初期化する
+	PosGap = VGet(0.0f, 0.0f, 0.0f);
+
+	//前座標の格納
+	m_OldPos = m_vPos;
+
+	//前座標との差
+	PosGap = VSub(m_vPos, m_OldPos);
+
+
 
 
 	//キャラクターの回転

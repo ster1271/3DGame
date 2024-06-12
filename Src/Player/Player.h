@@ -15,6 +15,9 @@ private:
 		PLAYER_STATE_NUM
 	};
 
+	//座標のズレ
+	VECTOR PosGap;
+
 	int HeadHndl;
 	VECTOR vHeadRot;		//頭部の回転
 
@@ -50,7 +53,26 @@ public:
 
 	//座標取得
 	inline VECTOR GetPosition() { return m_vPos; }
+
 	//Y軸角度取得
 	inline float GetRotateY() { return m_vRot.y; }
+
+	//X座標取得
+	inline float GetPositionX() { return m_vPos.x; }
+
+	//Y座標取得
+	inline float GetPositionY() { return m_vPos.y; }
+
+	//Z座標取得
+	inline float GetPositionY() { return m_vPos.z; }
+
+	//差分取得(X)
+	inline float GetGapPositionX() { return PosGap.x; }
+
+	//差分取得(Y)
+	inline float GetGapPositionY() { return PosGap.y; }
+
+	//差分取得(Z)
+	inline float GetGapPositionZ() { return PosGap.y; }
 
 };
