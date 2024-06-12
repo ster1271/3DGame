@@ -52,3 +52,46 @@
 
 	 }
  }
+
+ /*
+ //X‚Ì“–‚½‚è”»’è
+ void PLAYER::PulsX(int PosX, float Width)
+ {
+	 //¶‚©‚ç‚Ì“–‚½‚è”»’è
+	 if (dir == IsLeft)
+	 {
+		 float puls = 0.0f;
+		 puls = (Pos.x + 32.0f) - PosX;
+		 Pos.x -= puls;
+	 }
+	 //‰E‚©‚ç‚Ì“–‚½‚è”»’è
+	 else if (dir == IsRight)
+	 {
+		 float puls = 0.0f;
+		 puls = (PosX + Width) - (Pos.x - 32.0f);
+		 Pos.x += puls;
+	 }
+ }
+ //Y‚Ì“–‚½‚è”»’è
+ void PLAYER::PulsY(int PosY, float Height)
+ {
+	 //ã•ûŒü‚©‚ç‚Ì“–‚½‚è”»’è
+	 if (YSpeed > 0.0f)
+	 {
+		 float puls = 0.0f;
+		 puls = (Pos.y + 32.0f) - PosY;
+		 Pos.y -= puls;
+		 YSpeed = 0.0f;
+		 JumpCount = 0;
+		 IsJump = false;
+	 }
+	 //‰º•ûŒü‚©‚ç‚Ì“–‚½‚è”»’è
+	 else if (YSpeed < 0.0f)
+	 {
+		 float puls = 0.0f;
+		 puls = (PosY + Height) - (Pos.y - 32.0f);
+		 Pos.y += puls;
+		 YSpeed = -0.5f;
+	 }
+ }
+ */
