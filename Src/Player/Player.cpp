@@ -249,3 +249,8 @@ void CPlayer::Step(CShotManager& cShotManager)
 	}
 }
 
+//ƒvƒŒƒCƒ„[‚Ì‚ß‚è‚İC³
+void CPlayer::SetPos(VECTOR GAP)
+{
+	m_vPos = VAdd(m_vPos, GAP);
+}

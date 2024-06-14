@@ -75,4 +75,7 @@ public:
 	//·•ªæ“¾(Z)
 	inline float GetGapPositionZ() { return PosGap.y; }
 
+	//ƒvƒŒƒCƒ„[‚Ì‚ß‚è‚İC³
+	void SetPos(VECTOR GAP);
+
 };

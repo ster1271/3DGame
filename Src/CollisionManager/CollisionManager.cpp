@@ -48,124 +48,55 @@
  //物体との当たり判定
  void CCollisionManager::HitToObject(CPlayer& cPlayer)
  {
-	 
 	 if (CCollision::CheckHitBoxToBox(cPlayer.GetPosition(), VGet(40.0f, 50.0f, 40.0f), VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f)))
 	 {
+
+		 //めり込み量を格納する変数を生成
 		 VECTOR Puls = VGet(0.0f, 0.0f, 0.0f);
 
-		 
-		 /*X軸の当たり判定*/
 
+		 //
+		 ///*X軸の当たり判定*/
 		 ////右から当たった時
 		 //if (cPlayer.GetGapPositionX() > 0.0f)
 		 //{
-			//Puls.x = 
+			//Puls.x = //(物体の中心X座標 + Xサイズ(半分)) - (プレイヤーの中心X座標 - Xサイズ(半分))	
 		 //}
 		 ////左から当たった時
 		 //else
-		 //{
-			// float puls = 0.0f;
-
+		 //{ 
+			// Puls.x = //(物体の中心X座標 - Xサイズ(半分)) - (プレイヤーの中心X座標 + Xサイズ(半分))
 		 //}
+
+
+		 ///*Y軸の当たり判定*/
+		 ////上から
+		 //if (cPlayer.GetGapPositionY() < 0.0f)
+		 //{
+			// Puls.y = //(物体の中心Y座標 + Yサイズ(半分)) - (プレイヤーの中心Y座標 - Yサイズ(半分))
+		 //}
+		 ////下から当たった時
+		 //else
+		 //{
+			// Puls.y = //(物体の中心Y座標 - Yサイズ(半分)) - (プレイヤーの中心Y座標 + Yサイズ(半分))
+		 //}
+
+
+		 ///*Z軸の当たり判定*/
+		 ////手前から
+		 //if (cPlayer.GetGapPositionZ() > 0.0f)
+		 //{
+			// Puls.z = //(物体の中心Z座標 + Zサイズ(半分)) - (プレイヤーの中心Z座標 - Zサイズ(半分))
+		 //}
+		 ////奥から
+		 //else
+		 //{
+			// Puls.z = //(物体の中心Z座標 - Zサイズ(半分)) - (プレイヤーの中心Z座標 + Zサイズ(半分))
+		 //}
+		 //
 		 
-		 /*void PLAYER::PulsX(int PosX, float Width, )
-		 {
-			 //左からの当たり判定
-			 if (dir == IsLeft)
-			 {
-				 float puls = 0.0f;
-				 puls = (Pos.x + 32.0f) - PosX;
-				 Pos.x -= puls;
-			 }
-			 //右からの当たり判定
-			 else if (dir == IsRight)
-			 {
-				 float puls = 0.0f;
-				 puls = (PosX + Width) - (Pos.x - 32.0f);
-				 Pos.x += puls;
-			 }
-		 }
-		 */
-
-		 /*Y軸の当たり判定*/
-		 /*
-		 //Yの当たり判定
-		void PLAYER::PulsY(int PosY, float Height)
-		 {
-			 //上方向からの当たり判定
-			 if (YSpeed > 0.0f)
-			 {
-				 float puls = 0.0f;
-				 puls = (Pos.y + 32.0f) - PosY;
-				 Pos.y -= puls;
-				 YSpeed = 0.0f;
-				 JumpCount = 0;
-				 IsJump = false;
-			 }
-			 //下方向からの当たり判定
-			 else if (YSpeed < 0.0f)
-			 {
-				 float puls = 0.0f;
-				 puls = (PosY + Height) - (Pos.y - 32.0f);
-				 Pos.y += puls;
-				 YSpeed = -0.5f;
-			 }
-		 }
-		 */
-
-		 //上から
-
-		 //下から
-
-
-		 /*Z軸の当たり判定*/
-		 //手前から
-
-		 //奥から
-		 
-
+		 //最後にめり込んだ分を座標に加算する
+		 cPlayer.SetPos(Puls);
 	 }
  }
 
- /*
- //Xの当たり判定
- void PLAYER::PulsX(int PosX, float Width)
- {
-	 //左からの当たり判定
-	 if (dir == IsLeft)
-	 {
-		 float puls = 0.0f;
-		 puls = (Pos.x + 32.0f) - PosX;
-		 Pos.x -= puls;
-	 }
-	 //右からの当たり判定
-	 else if (dir == IsRight)
-	 {
-		 float puls = 0.0f;
-		 puls = (PosX + Width) - (Pos.x - 32.0f);
-		 Pos.x += puls;
-	 }
- }
- //Yの当たり判定
- void PLAYER::PulsY(int PosY, float Height)
- {
-	 //上方向からの当たり判定
-	 if (YSpeed > 0.0f)
-	 {
-		 float puls = 0.0f;
-		 puls = (Pos.y + 32.0f) - PosY;
-		 Pos.y -= puls;
-		 YSpeed = 0.0f;
-		 JumpCount = 0;
-		 IsJump = false;
-	 }
-	 //下方向からの当たり判定
-	 else if (YSpeed < 0.0f)
-	 {
-		 float puls = 0.0f;
-		 puls = (PosY + Height) - (Pos.y - 32.0f);
-		 Pos.y += puls;
-		 YSpeed = -0.5f;
-	 }
- }
- */
