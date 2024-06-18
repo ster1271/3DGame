@@ -153,6 +153,8 @@ void CPlayScene::Step()
 
 		//“–‚½‚è”»’è
 		CCollisionManager::CheckHitShotToEnemy(cEnemyManager, cShotManager);
+		CCollisionManager::HitToObject(cPlayer);
+
 	}
 
 	//ƒJƒƒ‰‚ÌØ‚è‘Ö‚¦ˆ—

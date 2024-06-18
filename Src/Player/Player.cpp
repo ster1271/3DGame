@@ -1,10 +1,8 @@
 #include "Player.h"
-#include "../Input/Input.h"
-#include <math.h>
-#include "../MyLibrary/MyLibrary.h"
-#include "../Draw3D/Draw3D.h"
+
 
 //定義関連
+static const char MODEL_PATH[] = { "Data/il/あいえるたん.pmx" };
 static const char PLAYER_MODEL_PATH[] = { "Data/Tank/Tank.x" };					//ファイル名
 static const char PLAYER_MODEL_FOUND_PATH[] = { "Data/Tank/tank_Found.x" };		//タンクのファイル名(本体)
 static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_Head.x" };		//タンクのファイル名(頭)
@@ -247,6 +245,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		cShotManager.RequestPlayerShot(BulletPos, vSpd);
 	}
+
 }
 
 //プレイヤーのめり込み修正

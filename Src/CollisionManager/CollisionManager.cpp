@@ -48,37 +48,43 @@
  //物体との当たり判定
  void CCollisionManager::HitToObject(CPlayer& cPlayer)
  {
-	 if (CCollision::CheckHitBoxToBox(cPlayer.GetPosition(), VGet(40.0f, 50.0f, 40.0f), VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f)))
-	 {
+	
+	 VECTOR vPlayerPos = cPlayer.GetPosition();			//プレイヤーの座標
+	 VECTOR vPlayerSize = VGet(40.0f, 50.0f, 40.0f);	//プレイヤーのサイズ
+	 VECTOR P_HarfSize = VScale(vPlayerSize, 0.5f);		//プレイヤーのサイズ(半分)
 
+	 VECTOR	vObjectPos = VGet(0.0f, 30.0f, 100.0f);		//オブジェクトの座標
+	 VECTOR vObjectSize = VGet(20.0f, 20.0f, 20.0f);	//オブジェクトのサイズ
+	 VECTOR HarfSize = VScale(vObjectSize, 0.5f);		//オブジェクトのサイズ(半分)
+
+	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
+	 {
 		 //めり込み量を格納する変数を生成
 		 VECTOR Puls = VGet(0.0f, 0.0f, 0.0f);
-
-
-		 //
-		 ///*X軸の当たり判定*/
-		 ////右から当たった時
-		 //if (cPlayer.GetGapPositionX() > 0.0f)
-		 //{
-			//Puls.x = //(物体の中心X座標 + Xサイズ(半分)) - (プレイヤーの中心X座標 - Xサイズ(半分))	
-		 //}
-		 ////左から当たった時
-		 //else
-		 //{ 
-			// Puls.x = //(物体の中心X座標 - Xサイズ(半分)) - (プレイヤーの中心X座標 + Xサイズ(半分))
-		 //}
+		 
+		 /*X軸の当たり判定*/
+		 //右から当たった時
+		 if (cPlayer.GetGapPositionX() > 0.0f)
+		 {
+			Puls.x = (vObjectPos.x + HarfSize.x) - (vPlayerPos.x - P_HarfSize.x);
+		 }
+		 //左から当たった時
+		 else
+		 { 
+		    Puls.x = (vObjectPos.x - HarfSize.x) - (vPlayerPos.x + P_HarfSize.x);
+		 }
 
 
 		 ///*Y軸の当たり判定*/
 		 ////上から
 		 //if (cPlayer.GetGapPositionY() < 0.0f)
 		 //{
-			// Puls.y = //(物体の中心Y座標 + Yサイズ(半分)) - (プレイヤーの中心Y座標 - Yサイズ(半分))
+			//Puls.y = (vObjectPos.y + HarfSize.y) - (vPlayerPos.y - P_HarfSize.y);
 		 //}
 		 ////下から当たった時
 		 //else
 		 //{
-			// Puls.y = //(物体の中心Y座標 - Yサイズ(半分)) - (プレイヤーの中心Y座標 + Yサイズ(半分))
+		 //   Puls.y = (vObjectPos.y - HarfSize.y) - (vPlayerPos.y + P_HarfSize.y);
 		 //}
 
 
@@ -86,14 +92,14 @@
 		 ////手前から
 		 //if (cPlayer.GetGapPositionZ() > 0.0f)
 		 //{
-			// Puls.z = //(物体の中心Z座標 + Zサイズ(半分)) - (プレイヤーの中心Z座標 - Zサイズ(半分))
+			//Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
 		 //}
 		 ////奥から
 		 //else
 		 //{
-			// Puls.z = //(物体の中心Z座標 - Zサイズ(半分)) - (プレイヤーの中心Z座標 + Zサイズ(半分))
+			//Puls.z = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
 		 //}
-		 //
+		 
 		 
 		 //最後にめり込んだ分を座標に加算する
 		 cPlayer.SetPos(Puls);

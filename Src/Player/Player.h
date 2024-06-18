@@ -1,7 +1,11 @@
 #pragma once
 #include <DxLib.h>
-#include "../Shot/ShotManager.h"
+#include <math.h>
 #include "../Object/Model/Model.h"
+#include "../Shot/ShotManager.h"
+#include "../Input/Input.h"
+#include "../MyLibrary/MyLibrary.h"
+#include "../Draw3D/Draw3D.h"
 
 class CPlayer : public CModel
 {
