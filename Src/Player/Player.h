@@ -64,7 +64,7 @@ public:
 	inline float GetPositionY() { return m_vPos.y; }
 
 	//ZÀ•Wæ“¾
-	inline float GetPositionY() { return m_vPos.z; }
+	inline float GetPositionZ() { return m_vPos.z; }
 
 	//·•ªæ“¾(X)
 	inline float GetGapPositionX() { return PosGap.x; }
