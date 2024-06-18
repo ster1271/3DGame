@@ -32,18 +32,18 @@ CPlayScene::~CPlayScene()
 //------------------------------------------
 int CPlayScene::Loop()
 {
-	int iRet = 0;
+	int iRet = eSceneID == CPlayScene::PLAY_SCENE_END ? 1 : 0;
+
 	switch (eSceneID)
 	{
 	case PLAY_SCENE_INIT:
 		Init();
-		eSceneID = PLAY_SCENE_LAOD;
+	
 		break;
 
 	case PLAY_SCENE_LAOD:
 		Load();
-		CSoundManager::Play(CSoundManager::SOUNDID_BGM, DX_PLAYTYPE_LOOP);
-		eSceneID = PLAY_SCENE_LOOP;
+		
 		break;
 
 	case PLAY_SCENE_LOOP:
@@ -52,8 +52,6 @@ int CPlayScene::Loop()
 
 	case PLAY_SCENE_END:
 		Exit();
-		eSceneID = PLAY_SCENE_INIT;
-		iRet = 1;
 		break;
 
 	default:
@@ -103,6 +101,7 @@ void CPlayScene::Init()
 	//íeèâä˙âª
 	cShotManager.Init();
 
+	eSceneID = PLAY_SCENE_LAOD;
 }
 
 
@@ -115,6 +114,8 @@ void CPlayScene::Exit()
 	cPlayer.Exit();
 	cEnemyManager.Exit();
 	cShotManager.Exit();
+
+	eSceneID = PLAY_SCENE_INIT;
 }
 
 
@@ -126,6 +127,9 @@ void CPlayScene::Load()
 	cPlayer.Load();
 	cEnemyManager.Load();
 	cShotManager.Load();
+
+	CSoundManager::Play(CSoundManager::SOUNDID_BGM, DX_PLAYTYPE_LOOP);
+	eSceneID = PLAY_SCENE_LOOP;
 }
 
 
