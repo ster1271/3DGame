@@ -34,29 +34,9 @@ int CPlayScene::Loop()
 {
 	int iRet = eSceneID == CPlayScene::PLAY_SCENE_END ? 1 : 0;
 
-	switch (eSceneID)
-	{
-	case PLAY_SCENE_INIT:
-		Init();
-	
-		break;
-
-	case PLAY_SCENE_LAOD:
-		Load();
-		
-		break;
-
-	case PLAY_SCENE_LOOP:
-		Step();
-		break;
-
-	case PLAY_SCENE_END:
-		Exit();
-		break;
-
-	default:
-		break;
-	}
+	//関数ポインタを作成
+	void (CPlayScene:: * Scene[])() = { &CPlayScene::Init, &CPlayScene::Load, &CPlayScene::Step, &CPlayScene::Exit };
+	(this->*Scene[eSceneID])();
 
 	return iRet;
 }
@@ -172,5 +152,6 @@ void CPlayScene::Step()
 	}
 	//カメラ更新処理
 	cCameraManager.Step(cPlayer.GetPosition(), cPlayer.GetRotateY());
+
 
 }

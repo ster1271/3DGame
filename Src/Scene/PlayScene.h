@@ -43,7 +43,7 @@ public:
 
 private:
 	//‰Šú‰»
-	void Init(void);
+	void Init();
 
 	//I—¹ˆ—
 	void Exit();
@@ -53,5 +53,4 @@ private:
 
 	//–ˆƒtƒŒ[ƒ€ŒÄ‚Ôˆ—
 	void Step();
-
 };
