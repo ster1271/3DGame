@@ -21,6 +21,8 @@ private:
 
 	//座標のズレ
 	VECTOR PosGap;
+	//テスト
+	int A = -1;
 
 	int HeadHndl;
 	VECTOR vHeadRot;		//頭部の回転

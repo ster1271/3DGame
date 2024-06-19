@@ -88,17 +88,17 @@
 		 //}
 
 
-		 ///*Z²‚Ì“–‚½‚è”»’è*/
-		 ////è‘O‚©‚ç
-		 //if (cPlayer.GetGapPositionZ() > 0.0f)
-		 //{
-			//Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
-		 //}
-		 ////‰œ‚©‚ç
-		 //else
-		 //{
-			//Puls.z = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
-		 //}
+		 /*Z²‚Ì“–‚½‚è”»’è*/
+		 //è‘O‚©‚ç
+		 if (cPlayer.GetGapPositionZ() > 0.0f)
+		 {
+			Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
+		 }
+		 //‰œ‚©‚ç
+		 else
+		 {
+			Puls.z = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
+		 }
 		 
 		 
 		 //ÅŒã‚É‚ß‚è‚ñ‚¾•ª‚ğÀ•W‚É‰ÁZ‚·‚é

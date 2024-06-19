@@ -103,6 +103,10 @@ void CPlayer::Draw()
 
 	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
 	CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
+
+	DrawFormatString(0, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
+	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
+	DrawFormatString(0, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
 }
 
 //更新処理
@@ -135,9 +139,11 @@ void CPlayer::Update()
 //----------------------------
 void CPlayer::Step(CShotManager& cShotManager)
 {
+
 	//マウス処理(仮)
 	//VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
 
+	/*SetMousePoint(0, 0);*/
 	//GetMousePoint(&MousePosX, &MousePosY);
 	//VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
 
@@ -154,9 +160,6 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	//前座標との差
 	PosGap = VSub(m_vPos, m_OldPos);
-
-
-
 
 	//キャラクターの回転
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
