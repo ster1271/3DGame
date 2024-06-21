@@ -27,6 +27,8 @@ CResultScene::~CResultScene()
 void CResultScene::Init()
 {
 	memset(&ResultHndl, -1, sizeof(ResultHndl));
+
+	eSceneID = RESULT_SCENE_LAOD;
 }
 
 //-------------------------------------
@@ -35,6 +37,8 @@ void CResultScene::Init()
 void CResultScene::Load()
 {
 	ResultHndl = LoadGraph(RESULT_PATH);
+
+	eSceneID = RESULT_SCENE_LOOP;
 }
 
 
@@ -43,33 +47,12 @@ void CResultScene::Load()
 //-------------------------------------
 int CResultScene::Loop()
 {
-	int iRet = 0;
-	switch (eSceneID)
-	{
-	case RESULT_SCENE_INIT:
-		Init();
-		eSceneID = RESULT_SCENE_LAOD;
-		break;
+	//シーンIDがRESULT_SCENE_ENDなら1そうでなければ0を返す
+	int iRet = eSceneID == RESULT_SCENE_END ? 1 : 0;
 
-	case RESULT_SCENE_LAOD:
-		Load();
-		eSceneID = RESULT_SCENE_LOOP;
-		break;
-
-	case RESULT_SCENE_LOOP:
-		Step();
-		Draw();
-		break;
-
-	case RESULT_SCENE_END:
-		Exit();
-		iRet = 1;
-		break;
-
-
-	default:
-		break;
-	}
+	//関数ポインタを作成
+	void (CResultScene:: * ResultScene[])() = { &CResultScene::Init, &CResultScene::Load, &CResultScene::Step, &CResultScene::Exit };
+	(this->*ResultScene[eSceneID])();
 
 	return iRet;
 }

@@ -29,6 +29,8 @@ void CTitleScene::Init()
 	memset(&TitleHndl, -1, sizeof(TitleHndl));
 	a = 255;
 	Trans = Null;
+
+	eSceneID = TITLE_SCENE_LAOD;
 }
 
 //-------------------------------------
@@ -37,6 +39,8 @@ void CTitleScene::Init()
 void CTitleScene::Load()
 {
 	TitleHndl = LoadGraph(TITLE_PATH);
+
+	eSceneID = TITLE_SCENE_LOOP;
 }
 
 
@@ -45,33 +49,10 @@ void CTitleScene::Load()
 //-------------------------------------
 int CTitleScene::Loop()
 {
-	int iRet = 0;
-	switch (eSceneID)
-	{
-	case TITLE_SCENE_INIT:
-		Init();
-		eSceneID = TITLE_SCENE_LAOD;
-		break;
+	int iRet = eSceneID == TITLE_SCENE_END ? 1 : 0;
 
-	case TITLE_SCENE_LAOD:
-		Load();
-		eSceneID = TITLE_SCENE_LOOP;
-		break;
-
-	case TITLE_SCENE_LOOP:
-		Step();
-		Draw();
-		break;
-
-	case TITLE_SCENE_END:
-		Exit();
-		iRet = 1;
-		break;
-
-
-	default:
-		break;
-	}
+	void (CTitleScene:: * TitleScene[])() = { &CTitleScene::Init, &CTitleScene::Load, &CTitleScene::Step, &CTitleScene::Exit };
+	(this->*TitleScene[eSceneID])();
 
 	return iRet;
 }

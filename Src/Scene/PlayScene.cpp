@@ -35,8 +35,8 @@ int CPlayScene::Loop()
 	int iRet = eSceneID == CPlayScene::PLAY_SCENE_END ? 1 : 0;
 
 	//ŠÖ”ƒ|ƒCƒ“ƒ^‚ðì¬
-	void (CPlayScene:: * Scene[])() = { &CPlayScene::Init, &CPlayScene::Load, &CPlayScene::Step, &CPlayScene::Exit };
-	(this->*Scene[eSceneID])();
+	void (CPlayScene:: * PlayScene[])() = { &CPlayScene::Init, &CPlayScene::Load, &CPlayScene::Step, &CPlayScene::Exit };
+	(this->*PlayScene[eSceneID])();
 
 	return iRet;
 }

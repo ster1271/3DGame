@@ -56,7 +56,6 @@ void SceneManager::Loop()
 		break;
 
 	case SCENE_NUM:
-
 		break;
 
 	default:
@@ -73,7 +72,7 @@ void SceneManager::Draw()
 	switch (eSceneID)
 	{
 	case SCENE_TITLE:
-
+		cTitleScene.Draw();
 		break;
 
 	case SCENE_PLAY:
@@ -81,11 +80,10 @@ void SceneManager::Draw()
 		break;
 
 	case SCENE_RESULT:
-
+		cResultScene.Draw();
 		break;
 
 	case SCENE_NUM:
-
 		break;
 
 	default:
