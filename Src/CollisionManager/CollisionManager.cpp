@@ -48,9 +48,14 @@
  //物体との当たり判定
  void CCollisionManager::HitToObject(CPlayer& cPlayer)
  {
-	 VECTOR GapVec = cPlayer.GetGapVec();				//座標の差分取得
+	 bool CheckDir[6];
+	 for (int Index = 0; Index < 6; Index++)
+	 {
+		 CheckDir[Index] = cPlayer.GetDir(Index);
+	 }
 	
-	 VECTOR vPlayerPos = cPlayer.GetPosition();			//プレイヤーの座標
+	
+	 VECTOR vPlayerPos = cPlayer.GetNextPos();			//プレイヤーの座標
 	 VECTOR vPlayerSize = VGet(40.0f, 50.0f, 40.0f);	//プレイヤーのサイズ
 	 VECTOR P_HarfSize = VScale(vPlayerSize, 0.5f);		//プレイヤーのサイズ(半分)
 
@@ -58,52 +63,62 @@
 	 VECTOR vObjectSize = VGet(20.0f, 20.0f, 20.0f);	//オブジェクトのサイズ
 	 VECTOR HarfSize = VScale(vObjectSize, 0.5f);		//オブジェクトのサイズ(半分)
 
+
 	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
 	 {
+
 		 //めり込み量を格納する変数を生成
 		 VECTOR Puls = VGet(0.0f, 0.0f, 0.0f);
 		 
 		 /*X軸の当たり判定*/
 		 //右から当たった時
-		 if (GapVec.x > 0.0f)
+		 if (CheckDir[1] == true)
 		 {
 			Puls.x = (vObjectPos.x + HarfSize.x) - (vPlayerPos.x - P_HarfSize.x);
+			vPlayerPos.x += Puls.x;
 		 }
 		 //左から当たった時
-		 else
+		 if(CheckDir[0] == true)
 		 { 
 		    Puls.x = (vObjectPos.x - HarfSize.x) - (vPlayerPos.x + P_HarfSize.x);
+			vPlayerPos.x += Puls.x;
 		 }
 
 
 		 /*Y軸の当たり判定*/
 		 //上から
-		 if (GapVec.y < 0.0f)
+		 if (CheckDir[3] == true)
 		 {
 			Puls.y = (vObjectPos.y + HarfSize.y) - (vPlayerPos.y - P_HarfSize.y);
+			vPlayerPos.y += Puls.y;
 		 }
 		 //下から当たった時
-		 else
+		 if (CheckDir[2] == true)
 		 {
 		    Puls.y = (vObjectPos.y - HarfSize.y) - (vPlayerPos.y + P_HarfSize.y);
+			vPlayerPos.y += Puls.y;
 		 }
 
 
 		 /*Z軸の当たり判定*/
 		 //手前から
-		 if (GapVec.z > 0.0f)
+		 if (CheckDir[5] == true)
 		 {
-			Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
+			 Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
+			 vPlayerPos.z += Puls.z;
 		 }
 		 //奥から
-		 else
+		 if (CheckDir[4] == true)
 		 {
-			Puls.z = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
+			 Puls.z = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
+			 vPlayerPos.z += Puls.z;
 		 }
 		 
-		 
-		 //最後にめり込んだ分を座標に加算する
-		 cPlayer.SetPos(Puls);
+
+		 //最後にめり込んだ分を座標に更新する
+		 cPlayer.SetPos(vPlayerPos);
+
+
 	 }
  }
 

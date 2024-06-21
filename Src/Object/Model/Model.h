@@ -19,7 +19,10 @@ protected:
 		int m_iState;			//アニメの状態
 	}ANIM_DATA;
 
+
+	bool Dir[6];
 	VECTOR m_vPos;				//座標
+	VECTOR NextPos;				//未来座標(仮)
 	VECTOR m_OldPos;			//前座標
 	VECTOR m_vRot;				//回転角度
 	VECTOR m_vScale;			//拡大縮小率

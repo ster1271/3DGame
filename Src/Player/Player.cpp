@@ -48,10 +48,10 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 	CModel::Init();
 
 	m_vPos = Pos;
+	NextPos = m_vPos;
 	m_vRot = Rot;
 	vHeadRot = Rot;
 	memset(&vSpeed, 0, sizeof(VECTOR));
-	memset(&PosGap, 0, sizeof(VECTOR));
 	eState = PLAYER_STATE_NORMAL;
 
 }
@@ -139,6 +139,14 @@ void CPlayer::Update()
 //----------------------------
 void CPlayer::Step(CShotManager& cShotManager)
 {
+	for (int i = 0; i < 6; i++)
+	{
+		//方向チェックの初期化
+		Dir[i] = false;
+	}
+
+	//前座標の格納
+	m_OldPos = m_vPos;
 
 	//マウス処理(仮)
 	//VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
@@ -151,15 +159,6 @@ void CPlayer::Step(CShotManager& cShotManager)
 	//Move = MyMath::Scale(Move, 0.01f);
 
 	//m_vRot.y -= Move.y;
-
-	//毎フレーム初期化する
-	PosGap = VGet(0.0f, 0.0f, 0.0f);
-
-	//前座標の格納
-	m_OldPos = m_vPos;
-
-	//前座標との差
-	PosGap = VSub(m_vPos, m_OldPos);
 
 	//キャラクターの回転
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
@@ -183,12 +182,14 @@ void CPlayer::Step(CShotManager& cShotManager)
 		fSpd = MOVE_SPEED;
 	}
 
+	m_vPos = NextPos;
+
 	//入力したキー情報とプレイヤーの角度から、移動速度を求める
 	vSpeed.x = sin(m_vRot.y) * fSpd;
 	vSpeed.z = cos(m_vRot.y) * fSpd;
 	//移動速度を現在の座標に加算する
-	m_vPos.x += vSpeed.x;
-	m_vPos.z += vSpeed.z;
+	NextPos.x += vSpeed.x;
+	NextPos.z += vSpeed.z;
 
 
 	if (CInput::IsKeyPush(KEY_INPUT_SPACE))
@@ -249,10 +250,49 @@ void CPlayer::Step(CShotManager& cShotManager)
 		cShotManager.RequestPlayerShot(BulletPos, vSpd);
 	}
 
+	//向いている方向チェック
+	CheckDir();
 }
 
 //プレイヤーのめり込み修正
-void CPlayer::SetPos(VECTOR GAP)
+void CPlayer::SetPos(VECTOR NewPos)
 {
-	m_vPos = VAdd(m_vPos, GAP);
+	NextPos = NewPos;
+}
+
+
+//向いている方向チェック
+void CPlayer::CheckDir()
+{
+	if (NextPos.x > m_vPos.x)
+	{
+		//右に動いている
+		Dir[0] = true;
+	}
+	if (NextPos.x < m_vPos.x)
+	{
+		//左に動いている
+		Dir[1] = true;
+	}
+	if (NextPos.y > m_vPos.y)
+	{
+		//上に動いている
+		Dir[2] = true;
+	}
+	if (NextPos.y < m_vPos.y)
+	{
+		//下に動いている
+		Dir[3] = true;
+	}
+	if (NextPos.z > m_vPos.z)
+	{
+		//奥に動いている
+		Dir[4] = true;
+	}
+	if (NextPos.z < m_vPos.z)
+	{
+		//手前に動いている
+		Dir[5] = true;
+	}
+
 }

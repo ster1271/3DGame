@@ -131,7 +131,6 @@ void CPlayScene::Step()
 	if (cCameraManager.GetCameraID() == CCameraManager::CAMERA_ID_PALY)
 	{
 		cPlayer.Step(cShotManager);
-		cPlayer.Update();
 		cEnemyManager.Step();
 		cShotManager.Step();
 
@@ -139,6 +138,7 @@ void CPlayScene::Step()
 		CCollisionManager::CheckHitShotToEnemy(cEnemyManager, cShotManager);
 		CCollisionManager::HitToObject(cPlayer);
 
+		cPlayer.Update();
 	}
 
 	//ƒJƒƒ‰‚ÌØ‚è‘Ö‚¦ˆ—

@@ -11,6 +11,7 @@ CModel::CModel()
 	memset(&m_vRot, 0, sizeof(VECTOR));
 	memset(&m_vScale, 0, sizeof(VECTOR));
 	memset(&m_OldPos, 0, sizeof(VECTOR));
+	memset(&NextPos, 0, sizeof(VECTOR));
 	MousePosX = MousePosY = 0;
 
 
@@ -33,6 +34,13 @@ CModel::CModel()
 	 m_vScale = VGet(0.1f, 0.1f, 0.1f);
 	 memset(&m_sAnimeData, 0, sizeof(m_sAnimeData));
 	 memset(&m_OldPos, 0, sizeof(VECTOR));
+
+	 for (int i = 0; i < 6; i++)
+	 {
+		 Dir[i] = false;
+	 }
+
+	 NextPos = m_vPos;
 	 MousePosX = MousePosY = 0;
 	 m_sAnimeData.m_iHndl = -1;
 	 m_sAnimeData.m_AnimeId = -1;

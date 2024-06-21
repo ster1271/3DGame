@@ -19,12 +19,8 @@ private:
 		PLAYER_STATE_NUM
 	};
 
-	//座標のズレ
-	VECTOR PosGap;
-	//テスト
-	int A = -1;
-
-	int HeadHndl;
+	
+	int HeadHndl;			//頭部のモデル
 	VECTOR vHeadRot;		//頭部の回転
 
 	VECTOR vSpeed;			//移動速度
@@ -57,25 +53,26 @@ public:
 	//毎フレーム呼ぶ処理
 	void Step(CShotManager& cShotManager);
 
+	//向いている方向チェック
+	void CheckDir();
+
+	//方向取得
+	bool GetDir(int iD)
+	{
+		return Dir[iD];
+	}
+
 	//座標取得
 	inline VECTOR GetPosition() { return m_vPos; }
+
+	//NextPos取得
+	inline VECTOR GetNextPos() { return NextPos; }
 
 	//Y軸角度取得
 	inline float GetRotateY() { return m_vRot.y; }
 
-	//X座標取得
-	inline float GetPositionX() { return m_vPos.x; }
+	//プレイヤーの更新座標取得
+	void SetPos(VECTOR NewPos);
 
-	//Y座標取得
-	inline float GetPositionY() { return m_vPos.y; }
-
-	//Z座標取得
-	inline float GetPositionZ() { return m_vPos.z; }
-
-	//差分取得
-	inline VECTOR GetGapVec() { return PosGap; }
-
-	//プレイヤーのめり込み修正
-	void SetPos(VECTOR GAP);
 
 };
