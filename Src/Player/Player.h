@@ -72,14 +72,8 @@ public:
 	//Z座標取得
 	inline float GetPositionZ() { return m_vPos.z; }
 
-	//差分取得(X)
-	inline float GetGapPositionX() { return PosGap.x; }
-
-	//差分取得(Y)
-	inline float GetGapPositionY() { return PosGap.y; }
-
-	//差分取得(Z)
-	inline float GetGapPositionZ() { return PosGap.y; }
+	//差分取得
+	inline VECTOR GetGapVec() { return PosGap; }
 
 	//プレイヤーのめり込み修正
 	void SetPos(VECTOR GAP);

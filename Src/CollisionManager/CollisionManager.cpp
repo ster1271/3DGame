@@ -48,6 +48,7 @@
  //物体との当たり判定
  void CCollisionManager::HitToObject(CPlayer& cPlayer)
  {
+	 VECTOR GapVec = cPlayer.GetGapVec();				//座標の差分取得
 	
 	 VECTOR vPlayerPos = cPlayer.GetPosition();			//プレイヤーの座標
 	 VECTOR vPlayerSize = VGet(40.0f, 50.0f, 40.0f);	//プレイヤーのサイズ
@@ -64,7 +65,7 @@
 		 
 		 /*X軸の当たり判定*/
 		 //右から当たった時
-		 if (cPlayer.GetGapPositionX() > 0.0f)
+		 if (GapVec.x > 0.0f)
 		 {
 			Puls.x = (vObjectPos.x + HarfSize.x) - (vPlayerPos.x - P_HarfSize.x);
 		 }
@@ -75,22 +76,22 @@
 		 }
 
 
-		 ///*Y軸の当たり判定*/
-		 ////上から
-		 //if (cPlayer.GetGapPositionY() < 0.0f)
-		 //{
-			//Puls.y = (vObjectPos.y + HarfSize.y) - (vPlayerPos.y - P_HarfSize.y);
-		 //}
-		 ////下から当たった時
-		 //else
-		 //{
-		 //   Puls.y = (vObjectPos.y - HarfSize.y) - (vPlayerPos.y + P_HarfSize.y);
-		 //}
+		 /*Y軸の当たり判定*/
+		 //上から
+		 if (GapVec.y < 0.0f)
+		 {
+			Puls.y = (vObjectPos.y + HarfSize.y) - (vPlayerPos.y - P_HarfSize.y);
+		 }
+		 //下から当たった時
+		 else
+		 {
+		    Puls.y = (vObjectPos.y - HarfSize.y) - (vPlayerPos.y + P_HarfSize.y);
+		 }
 
 
 		 /*Z軸の当たり判定*/
 		 //手前から
-		 if (cPlayer.GetGapPositionZ() > 0.0f)
+		 if (GapVec.z > 0.0f)
 		 {
 			Puls.z = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
 		 }
