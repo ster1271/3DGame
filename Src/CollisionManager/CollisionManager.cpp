@@ -89,14 +89,6 @@
 	 }
 
 
-
-	 VECTOR PlayerPos = cPlayer.GetNextPos();			//プレイヤーの座標
-	 VECTOR PlayerSize = VGet(40.0f, 50.0f, 40.0f);	//プレイヤーのサイズ
-	 VECTOR P1_HarfSize = VScale(vPlayerSize, 0.5f);		//プレイヤーのサイズ(半分)
-
-	 VECTOR	v1ObjectPos = ObjectPos;						//オブジェクトの座標
-	 VECTOR v1ObjectSize = ObjectSize;					//オブジェクトのサイズ
-	 VECTOR HarfSize1 = VScale(v1ObjectSize, 0.5f);		//オブジェクトのサイズ(半分)
 	 /*Y軸の当たり判定*/
 	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
 	 {
