@@ -12,5 +12,5 @@ public:
 	static void CheckHitShotToEnemy(CEnemyManager& cEnemyManager, CShotManager& cShotManager);
 
 	//•¨‘Ì‚Æ‚Ì“–‚½‚è”»’è
-	static void HitToObject(CPlayer& cPlayer);
+	static void HitToObject(CPlayer& cPlayer, VECTOR ObjectPos, VECTOR ObjectSize);
 };
