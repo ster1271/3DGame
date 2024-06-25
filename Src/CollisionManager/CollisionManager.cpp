@@ -55,7 +55,9 @@
 	 }
 		
 
-	 VECTOR vPlayerPos = cPlayer.GetNextPos();			//プレイヤーの座標
+	 VECTOR NextPos = cPlayer.GetNextPos();			//プレイヤーの座標
+	 VECTOR PlayerPos = cPlayer.GetPosition();		//プレイヤーの座標
+
 	 VECTOR vPlayerSize = VGet(40.0f, 50.0f, 40.0f);	//プレイヤーのサイズ
 	 VECTOR P_HarfSize = VScale(vPlayerSize, 0.5f);		//プレイヤーのサイズ(半分)
 
@@ -63,8 +65,11 @@
 	 VECTOR vObjectSize = ObjectSize;					//オブジェクトのサイズ
 	 VECTOR HarfSize = VScale(vObjectSize, 0.5f);		//オブジェクトのサイズ(半分)
 
+
+	 NextPos.y = PlayerPos.y;
+	 NextPos.z = PlayerPos.z;
 	 /*X軸の当たり判定*/
-	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
+	 if (CCollision::CheckHitBoxToBox(NextPos, vPlayerSize, vObjectPos, vObjectSize))
 	 {
 
 		 //めり込み量を格納する変数を生成
@@ -73,24 +78,25 @@
 		 //右から当たった時
 		 if (CheckDir[1] == true)
 		 {
-			Overlap = (vObjectPos.x + HarfSize.x) - (vPlayerPos.x - P_HarfSize.x);
-			vPlayerPos.x += Overlap;
+			Overlap = (vObjectPos.x + HarfSize.x) - (NextPos.x - P_HarfSize.x);
+			NextPos.x += Overlap;
 		 }
 		 //左から当たった時
 		 if(CheckDir[0] == true)
 		 { 
-			Overlap = (vObjectPos.x - HarfSize.x) - (vPlayerPos.x + P_HarfSize.x);
-			vPlayerPos.x += Overlap;
+			Overlap = (vObjectPos.x - HarfSize.x) - (NextPos.x + P_HarfSize.x);
+			NextPos.x += Overlap;
 		 }
 
 		 //最後にめり込んだ分を座標に更新する
-		 cPlayer.SetPos(vPlayerPos);
+		 cPlayer.SetPos(NextPos);
 
 	 }
 
-
+	 NextPos.x = PlayerPos.x;
+	 NextPos.z = PlayerPos.z;
 	 /*Y軸の当たり判定*/
-	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
+	 if (CCollision::CheckHitBoxToBox(NextPos, vPlayerSize, vObjectPos, vObjectSize))
 	 {
 		 //めり込み量を格納する変数を生成
 		 float Overlap = 0.0f;
@@ -98,22 +104,24 @@
 		 //上から
 		 if (CheckDir[3] == true)
 		 {
-			 Overlap = (vObjectPos.y + HarfSize.y) - (vPlayerPos.y - P_HarfSize.y);
-			 vPlayerPos.y += Overlap;
+			 Overlap = (vObjectPos.y + HarfSize.y) - (NextPos.y - P_HarfSize.y);
+			 NextPos.y += Overlap;
 		 }
 		 //下から当たった時
 		 if (CheckDir[2] == true)
 		 {
-			 Overlap = (vObjectPos.y - HarfSize.y) - (vPlayerPos.y + P_HarfSize.y);
-			 vPlayerPos.y += Overlap;
+			 Overlap = (vObjectPos.y - HarfSize.y) - (NextPos.y + P_HarfSize.y);
+			 NextPos.y += Overlap;
 		 }
 
 		 //最後にめり込んだ分を座標に更新する
-		 cPlayer.SetPos(vPlayerPos);
+		 cPlayer.SetPos(NextPos);
 	 }
 
+	 NextPos.x = PlayerPos.x;
+	 NextPos.y = PlayerPos.y;
 	 /*Z軸の当たり判定*/
-	 if (CCollision::CheckHitBoxToBox(vPlayerPos, vPlayerSize, vObjectPos, vObjectSize))
+	 if (CCollision::CheckHitBoxToBox(NextPos, vPlayerSize, vObjectPos, vObjectSize))
 	 {
 		 //めり込み量を格納する変数を生成
 		 float Overlap = 0.0f;
@@ -122,18 +130,18 @@
 		 //手前から
 		 if (CheckDir[5] == true)
 		 {
-			 Overlap = (vObjectPos.z + HarfSize.z) - (vPlayerPos.z - P_HarfSize.z);
-			 vPlayerPos.z += Overlap;
+			 Overlap = (vObjectPos.z + HarfSize.z) - (NextPos.z - P_HarfSize.z);
+			 NextPos.z += Overlap;
 		 }
 		 //奥から
 		 if (CheckDir[4] == true)
 		 {
-			 Overlap = (vObjectPos.z - HarfSize.z) - (vPlayerPos.z + P_HarfSize.z);
-			 vPlayerPos.z += Overlap;
+			 Overlap = (vObjectPos.z - HarfSize.z) - (NextPos.z + P_HarfSize.z);
+			 NextPos.z += Overlap;
 		 }
 
 		 //最後にめり込んだ分を座標に更新する
-		 cPlayer.SetPos(vPlayerPos);
+		 cPlayer.SetPos(NextPos);
 
 	 }
  }
