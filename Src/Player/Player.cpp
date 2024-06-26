@@ -4,8 +4,8 @@
 //定義関連
 static const char MODEL_PATH[] = { "Data/il/あいえるたん.pmx" };
 static const char PLAYER_MODEL_PATH[] = { "Data/Tank/Tank.x" };					//ファイル名
-static const char PLAYER_MODEL_FOUND_PATH[] = { "Data/Tank/tank_Found.x" };		//タンクのファイル名(本体)
-static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_Head.x" };		//タンクのファイル名(頭)
+static const char PLAYER_MODEL_FOUND_PATH[] = { "Data/Tank/tank_M.x" };		//タンクのファイル名(本体)
+static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_H.x" };		//タンクのファイル名(頭)
 
 static const float ROTATE_SPEED = 0.05f;							//プレイヤーの回転速度
 static const float MOVE_SPEED = 0.5f;								//プレイヤーの移動速度
@@ -19,6 +19,9 @@ CPlayer::CPlayer()
 
 	//初期化する
 	memset(&vSpeed, 0, sizeof(VECTOR));
+	memset(&vHeadRot, 0, sizeof(VECTOR));
+	HeadHndl = -1;
+
 	eState = PLAYER_STATE_NORMAL;
 
 }
@@ -62,7 +65,7 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 void CPlayer::Load()
 {
 	LoadModel(PLAYER_MODEL_FOUND_PATH);
-	//HeadHndl = MV1LoadModel(PLAYER_MODEL_HEAD_PATH);
+	HeadHndl = MV1LoadModel(PLAYER_MODEL_HEAD_PATH);
 }
 
 //----------------------------
@@ -149,16 +152,16 @@ void CPlayer::Step(CShotManager& cShotManager)
 	m_OldPos = m_vPos;
 
 	//マウス処理(仮)
-	//VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
+	VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
 
 	/*SetMousePoint(0, 0);*/
-	//GetMousePoint(&MousePosX, &MousePosY);
-	//VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
+	GetMousePoint(&MousePosX, &MousePosY);
+	VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
 
-	//VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
-	//Move = MyMath::Scale(Move, 0.01f);
+	VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
+	Move = MyMath::Scale(Move, 0.001f);
 
-	//m_vRot.y -= Move.y;
+	vHeadRot.y += Move.x;
 
 	//キャラクターの回転
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
