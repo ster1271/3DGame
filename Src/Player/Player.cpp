@@ -163,11 +163,11 @@ void CPlayer::Step(CShotManager& cShotManager)
 	//キャラクターの回転
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
 	{
-		m_vRot.y -= 0.01f;
+		m_vRot.y -= 0.05f;
 	}
 	else if (CInput::IsKeyKeep(KEY_INPUT_D))
 	{
-		m_vRot.y += 0.01f;
+		m_vRot.y += 0.05f;
 	}
 
 

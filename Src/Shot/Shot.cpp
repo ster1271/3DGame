@@ -90,8 +90,11 @@ void CShot::Step()
 
 	//À•W‚É‘¬“x‚ð‰ÁŽZ
 	m_vPos = VAdd(m_vPos, m_vSpeed);
+	m_vPos.y += Yspeed;
+	Yspeed -= 0.05f;
+
 	//ˆê’è”ÍˆÍ‚ð’´‚¦‚½‚çÁ‚·
-	float fLength =	300.0f;
+	float fLength =	1000.0f;
 	if (m_vPos.x > fLength || m_vPos.x < -fLength
 		|| m_vPos.z > fLength || m_vPos.z < -fLength)
 	{
@@ -114,6 +117,7 @@ bool CShot::RequestShot(const VECTOR &vPos, const VECTOR &vSpeed)
 
 	m_vPos = vPos;
 	m_vSpeed = vSpeed;
+	Yspeed = 2.5f;
 	isActive = true;
 
 	return true;

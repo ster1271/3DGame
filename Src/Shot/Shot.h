@@ -8,6 +8,7 @@ class CShot
 private:
 	VECTOR m_vPos;			//座標
 	VECTOR m_vSpeed;		//移動速度
+	float Yspeed;			//Yスピード
 	float m_Radius;			//モデルの半径
 	int iHndl;				//モデルのハンドル
 	bool isActive;			//生存フラグ
