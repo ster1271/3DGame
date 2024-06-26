@@ -28,6 +28,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//描画するスクリーンを設定する
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	//マウスの表示をなくす
+	SetMouseDispFlag(FALSE);
 	
 	//-----------------------------------------
 	//一番最初に１回だけやる処理をここに書く

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../Common.h"
 
 
 //定義関連
@@ -10,6 +11,7 @@ static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_H.x" };		//タンク
 static const float ROTATE_SPEED = 0.05f;							//プレイヤーの回転速度
 static const float MOVE_SPEED = 0.5f;								//プレイヤーの移動速度
 
+const float ROT_SPEED = 0.05f;			//軸の回転スピード
 
 //----------------------------
 //コンストラクタ
@@ -151,26 +153,22 @@ void CPlayer::Step(CShotManager& cShotManager)
 	//前座標の格納
 	m_OldPos = m_vPos;
 
-	//マウス処理(仮)
-	VECTOR OldMousePos = VGet(MousePosX, MousePosY, 0.0f);
-
-	/*SetMousePoint(0, 0);*/
 	GetMousePoint(&MousePosX, &MousePosY);
-	VECTOR MousePos = VGet(MousePosX, MousePosY, 0.0f);
 
-	VECTOR Move = MyMath::SubVec(MousePos, OldMousePos);
-	Move = MyMath::Scale(Move, 0.001f);
+	VECTOR Move = MyMath::SubVec(VGet(MousePosX, MousePosY, 0.0f), VGet(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2, 0.0f));
 
-	vHeadRot.y += Move.x;
+	vHeadRot.y += (Move.x * 0.1f) * DX_PI_F / 180.0f;
+
+	SetMousePoint(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2);
 
 	//キャラクターの回転
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
 	{
-		m_vRot.y -= 0.05f;
+		m_vRot.y -= ROT_SPEED;
 	}
 	else if (CInput::IsKeyKeep(KEY_INPUT_D))
 	{
-		m_vRot.y += 0.05f;
+		m_vRot.y += ROT_SPEED;
 	}
 
 
@@ -201,10 +199,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 		VECTOR BulletPos = m_vPos;
 
 		//発射位置座標
-		VECTOR SetPos = BulletPos;
-		SetPos.z = -70.0f;
-		SetPos.y = 5.0f;
-		SetPos.x = 0.0f;
+		VECTOR SetPos = VGet(0.0f, 5.0f, -70.0f);
 
 
 		//速度はプレイヤーと同じ方法で移動方向を決める
@@ -227,10 +222,10 @@ void CPlayer::Step(CShotManager& cShotManager)
 		mMove = MGetTranslate(SetPos); 
 
 		//④X軸回転準備
-		MATRIX rotX = MGetRotX(m_vRot.x);
+		MATRIX rotX = MGetRotX(vHeadRot.x);
 
 		//⑤Y軸回転準備
-		MATRIX rotY = MGetRotY(m_vRot.y);
+		MATRIX rotY = MGetRotY(vHeadRot.y);
 
 		/* X -> Y -> Zの順番で計算*/
 		
