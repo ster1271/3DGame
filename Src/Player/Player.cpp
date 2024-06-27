@@ -11,7 +11,7 @@ static const char PLAYER_MODEL_HEAD_PATH[] = { "Data/Tank/tank_H.x" };		//タンク
 static const float ROTATE_SPEED = 0.05f;							//プレイヤーの回転速度
 static const float MOVE_SPEED = 0.5f;								//プレイヤーの移動速度
 
-const float ROT_SPEED = 0.05f;			//軸の回転スピード
+const float ROT_SPEED = 0.02f;			//軸の回転スピード
 
 //----------------------------
 //コンストラクタ
@@ -155,9 +155,9 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	GetMousePoint(&MousePosX, &MousePosY);
 
-	VECTOR Move = MyMath::SubVec(VGet(MousePosX, MousePosY, 0.0f), VGet(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2, 0.0f));
-
-	vHeadRot.y += (Move.x * 0.1f) * DX_PI_F / 180.0f;
+	VECTOR Move = MyMath::SubVec(VGet((float)MousePosX, (float)MousePosY, 0.0f), VGet((float)SCREEN_SIZE_X / 2.0f, (float)SCREEN_SIZE_Y / 2.0f, 0.0f));
+	//vHeadRot.x += (Move.y * 0.01f) * DX_PI_F / 180.0f;
+	vHeadRot.y += (Move.x * 0.01f) * DX_PI_F / 180.0f;
 
 	SetMousePoint(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2);
 
@@ -201,13 +201,12 @@ void CPlayer::Step(CShotManager& cShotManager)
 		//発射位置座標
 		VECTOR SetPos = VGet(0.0f, 5.0f, -70.0f);
 
-
 		//速度はプレイヤーと同じ方法で移動方向を決める
 		const float SHOT_SPEED = 5.0f;
 		VECTOR vSpd;
 		
-		vSpd.x = sinf(m_vRot.y) * -SHOT_SPEED;
-		vSpd.z = cosf(m_vRot.y) * -SHOT_SPEED;
+		vSpd.x = sinf(vHeadRot.y) * -SHOT_SPEED;
+		vSpd.z = cosf(vHeadRot.y) * -SHOT_SPEED;
 		vSpd.y = 0.0f;
 
 		//===================行列による弾の発射位置変更==============================
@@ -226,13 +225,12 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		//⑤Y軸回転準備
 		MATRIX rotY = MGetRotY(vHeadRot.y);
-
-		/* X -> Y -> Zの順番で計算*/
 		
 		//⑥原点座標から移動量を増やす
 		MATRIX matrix = MMult(mCenter, mMove);
 
 		//⑦回転行列計算
+		/* X -> Y -> Zの順番で計算*/
 		matrix = MMult(matrix, rotX);
 		matrix = MMult(matrix, rotY);
 
@@ -245,7 +243,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		//===================行列による弾の発射位置変更==============================
 
-		cShotManager.RequestPlayerShot(BulletPos, vSpd);
+		cShotManager.RequestPlayerShot(BulletPos, vSpd, 2.0f);
 	}
 
 	//向いている方向チェック

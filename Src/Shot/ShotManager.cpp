@@ -90,11 +90,11 @@ void CShotManager::Draw()
 //------------------------------------
 //プレイヤーのショットリクエスト
 //------------------------------------
-void CShotManager::RequestPlayerShot(const VECTOR& vPos, const VECTOR& vSpeed)
+void CShotManager::RequestPlayerShot(const VECTOR& vPos, const VECTOR& vSpeed, const float& YSpeed)
 {
 	for (int i = 0; i < PL_SHOT_NUM; i++)
 	{
-		if (cPlayerShot[i].RequestShot(vPos, vSpeed))
+		if (cPlayerShot[i].RequestShot(vPos, vSpeed, YSpeed))
 		{
 			CSoundManager::Play(CSoundManager::SOUNDID_SE_PLSHOT);
 			break;

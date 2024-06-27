@@ -69,6 +69,7 @@ public:
 
 	//Y軸角度取得
 	inline float GetRotateY() { return m_vRot.y; }
+	
 
 	//プレイヤーの更新座標取得
 	void SetPos(VECTOR NewPos);

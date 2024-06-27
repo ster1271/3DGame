@@ -31,5 +31,5 @@ public:
 	inline CShot& GetPlayerShot(int iID) { return cPlayerShot[iID]; }
 
 	//プレイヤーのショットリクエスト
-	void RequestPlayerShot(const VECTOR& vPos, const VECTOR& vSpeed);
+	void RequestPlayerShot(const VECTOR& vPos, const VECTOR& vSpeed, const float& YSpeed);
 };

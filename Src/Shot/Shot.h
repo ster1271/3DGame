@@ -2,6 +2,7 @@
 #include <DxLib.h>
 
 const int SHOTRADIUS	(1);
+const float GRAVITY		(0.05f);
 
 class CShot
 {
@@ -38,7 +39,7 @@ public:
 	//m_vPos		： 初期座標
 	//m_vSpeed	： 移動速度(方向ベクトルで)
 	//return	： true = リクエスト成功, false = 失敗
-	bool RequestShot(const VECTOR& m_vPos, const VECTOR& m_vSpeed);
+	bool RequestShot(const VECTOR& vPos, const VECTOR& vSpeed, const float& YSpeed);
 
 	//生存判定
 	//return 　： true = 生存, false = 失敗
