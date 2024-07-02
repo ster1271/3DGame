@@ -43,7 +43,7 @@ CPlayer::~CPlayer()
 //----------------------------
 void CPlayer::Init()
 {
-	Init(VGet(0.0f, 10.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f));
+	Init(VGet(0.0f, 10.0f, 0.0f), VGet(0.0f, DX_PI_F, 0.0f));
 }
 
 //----------------------------
@@ -114,6 +114,8 @@ void CPlayer::Draw()
 	DrawFormatString(0, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
 	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
 	DrawFormatString(0, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
+
+	DrawFormatString(0, 60, GetColor(255, 0, 0), "回転値：%f", vHeadRot.y);
 }
 
 //更新処理
@@ -165,9 +167,9 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	//砲台の角度制限(制作中)
 	float a = (-45.0f * DX_PI_F / 180.0f);
-	//float b = (275.0f * DX_PI_F / 180.0f);
+	float b = (45.0f * DX_PI_F / 180.0f);
 
-	if (vHeadRot.y < a /*|| vHeadRot.y > b*/)
+	if (vHeadRot.y < vHeadRot.y + a || vHeadRot.y > vHeadRot.y + b)
 	{
 		vHeadRot.y = vOldRot.y;
 	}
