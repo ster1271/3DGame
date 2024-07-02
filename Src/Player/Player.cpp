@@ -21,6 +21,7 @@ CPlayer::CPlayer()
 
 	//初期化する
 	memset(&vSpeed, 0, sizeof(VECTOR));
+	memset(&vHeadPos, 0, sizeof(VECTOR));
 	memset(&vHeadRot, 0, sizeof(VECTOR));
 	HeadHndl = -1;
 
@@ -42,7 +43,7 @@ CPlayer::~CPlayer()
 //----------------------------
 void CPlayer::Init()
 {
-	Init(VGet(0.0f, 10.0f, 0.0f), VGet(0.0f, DX_PI_F, 0.0f));
+	Init(VGet(0.0f, 10.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f));
 }
 
 //----------------------------
@@ -57,6 +58,7 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 	m_vRot = Rot;
 	vHeadRot = Rot;
 	memset(&vSpeed, 0, sizeof(VECTOR));
+	vHeadPos = Pos;
 	eState = PLAYER_STATE_NORMAL;
 
 }
@@ -130,7 +132,7 @@ void CPlayer::Update()
 	MV1SetRotationXYZ(m_iHndl, m_vRot);
 	MV1SetScale(m_iHndl, m_vScale);
 
-	MV1SetPosition(HeadHndl, m_vPos);
+	MV1SetPosition(HeadHndl, vHeadPos);
 	MV1SetRotationXYZ(HeadHndl, vHeadRot);
 	MV1SetScale(HeadHndl, m_vScale);
 
@@ -157,7 +159,19 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	VECTOR Move = MyMath::SubVec(VGet((float)MousePosX, (float)MousePosY, 0.0f), VGet((float)SCREEN_SIZE_X / 2.0f, (float)SCREEN_SIZE_Y / 2.0f, 0.0f));
 	//vHeadRot.x += (Move.y * 0.01f) * DX_PI_F / 180.0f;
+	VECTOR vOldRot = VGet(0.0f, vHeadRot.y, 0.0f);
+
 	vHeadRot.y += (Move.x * 0.01f) * DX_PI_F / 180.0f;
+
+	//砲台の角度制限(制作中)
+	float a = (-45.0f * DX_PI_F / 180.0f);
+	//float b = (275.0f * DX_PI_F / 180.0f);
+
+	if (vHeadRot.y < a /*|| vHeadRot.y > b*/)
+	{
+		vHeadRot.y = vOldRot.y;
+	}
+	
 
 	SetMousePoint(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2);
 
@@ -165,10 +179,12 @@ void CPlayer::Step(CShotManager& cShotManager)
 	if (CInput::IsKeyKeep(KEY_INPUT_A))
 	{
 		m_vRot.y -= ROT_SPEED;
+		vHeadRot.y -= ROT_SPEED;
 	}
 	else if (CInput::IsKeyKeep(KEY_INPUT_D))
 	{
 		m_vRot.y += ROT_SPEED;
+		vHeadRot.y += ROT_SPEED;
 	}
 
 
@@ -184,6 +200,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 	}
 
 	m_vPos = NextPos;
+	vHeadPos = m_vPos;
 
 	//入力したキー情報とプレイヤーの角度から、移動速度を求める
 	vSpeed.x = sin(m_vRot.y) * fSpd;
@@ -196,7 +213,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 	if (CInput::IsKeyPush(KEY_INPUT_SPACE))
 	{
 		//戦車の打ち出し口から出るように座標を変更する
-		VECTOR BulletPos = m_vPos;
+		VECTOR BulletPos = vHeadPos;
 
 		//発射位置座標
 		VECTOR SetPos = VGet(0.0f, 5.0f, -70.0f);
@@ -216,7 +233,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 		//②原点座標から元の座標に戻す行列を作成
 		MATRIX mPosition = MGetTranslate(BulletPos);
 
-		//③弾の位置に移動する行列を準備
+		//③弾の発射位置に移動する行列を準備
 		MATRIX mMove = MGetIdent();
 		mMove = MGetTranslate(SetPos); 
 

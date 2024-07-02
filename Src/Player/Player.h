@@ -21,6 +21,7 @@ private:
 
 	
 	int HeadHndl;			//頭部のモデル
+	VECTOR vHeadPos;		//頭部の座標
 	VECTOR vHeadRot;		//頭部の回転
 	VECTOR vSpeed;			//移動速度
 	tagPlayerState eState;	//プレイヤーの状態
