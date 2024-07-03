@@ -189,7 +189,6 @@ void CPlayer::Step(CShotManager& cShotManager)
 		vHeadRot.y += ROT_SPEED;
 	}
 
-
 	//キャラクターの移動
 	float fSpd = 0.0f;
 	if (CInput::IsKeyKeep(KEY_INPUT_W))
@@ -262,7 +261,8 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		//===================行列による弾の発射位置変更==============================
 
-		cShotManager.RequestPlayerShot(BulletPos, vSpd, 2.0f);
+		cShotManager.RequestPlayerShot(BulletPos, vSpd, 0.0f);
+		vHeadPos.z -= 4.0f;
 	}
 
 	//向いている方向チェック

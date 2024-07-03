@@ -32,6 +32,7 @@ void CEnemyBase::Init()
 {
 	memset(&m_vPos, 0, sizeof(VECTOR));
 	memset(&m_vSpeed, 0, sizeof(VECTOR));
+	m_Life = MAX_LIFE;
 	m_iHndl = -1;
 	m_isActive = false;
 	m_Radius = ENEMYRADIUS;
@@ -124,6 +125,7 @@ bool CEnemyBase::RequestEnemy(const VECTOR &vPos, const VECTOR &vSpeed)
 
 	m_vPos = vPos;
 	m_vSpeed = vSpeed;
+	m_Life = MAX_LIFE;
 	m_isActive = true;
 
 	//一度座標更新しておく
