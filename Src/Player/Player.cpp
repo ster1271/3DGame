@@ -165,11 +165,11 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	vHeadRot.y += (Move.x * 0.01f) * DX_PI_F / 180.0f;
 
-	//ñCë‰ÇÃäpìxêßå¿(êßçÏíÜ)
-	float a = (-45.0f * DX_PI_F / 180.0f);
-	float b = (45.0f * DX_PI_F / 180.0f);
+	//ñCë‰ÇÃäpìxêßå¿
+	float Angle_Limit_L = m_vRot.y + (-90.0f * DX_PI_F / 180.0f);
+	float Angle_Limit_R = m_vRot.y + (90.0f * DX_PI_F / 180.0f);
 
-	if (vHeadRot.y < vHeadRot.y + a || vHeadRot.y > vHeadRot.y + b)
+	if (vHeadRot.y < Angle_Limit_L || vHeadRot.y > Angle_Limit_R)
 	{
 		vHeadRot.y = vOldRot.y;
 	}
