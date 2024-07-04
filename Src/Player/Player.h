@@ -30,6 +30,8 @@ private:
 	VECTOR vSpeed;			//移動速度
 	tagPlayerState eState;	//プレイヤーの状態
 
+	VECTOR TEST_BULLETPOS;
+
 public:
 	//コンストラクタ・デストラクタ
 	CPlayer();

@@ -58,10 +58,8 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 	NextPos = m_vPos;
 	m_vRot = Rot;
 	vHeadRot = Rot;
-	ShotPos = Pos;			//発射筒の座標
-	ShotRot = Rot;			//発射筒の回転値
 	memset(&vSpeed, 0, sizeof(VECTOR));
-	vHeadPos = Pos;
+	vHeadPos = VGet(0.0f, 23.0f, 0.0f);
 	eState = PLAYER_STATE_NORMAL;
 
 }
@@ -109,9 +107,8 @@ void CPlayer::Draw()
 		return;
 	}
 
-	/*MV1DrawModel(m_iHndl);
-	MV1DrawModel(HeadHndl);*/
-	MV1DrawModel(ShotHndl);
+	MV1DrawModel(m_iHndl);
+	MV1DrawModel(HeadHndl);
 
 	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
 	CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
@@ -120,13 +117,10 @@ void CPlayer::Draw()
 	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
 	DrawFormatString(0, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
 
-	DrawFormatString(0, 45, GetColor(255, 0, 0), "発射筒X座標：%f", ShotPos.x);
-	DrawFormatString(0, 60, GetColor(255, 0, 0), "発射筒Y座標：%f", ShotPos.y);
-	DrawFormatString(0, 75, GetColor(255, 0, 0), "発射筒Z座標：%f", ShotPos.z);
+	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", vHeadRot.y);
+	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", vHeadRot.x);
 
-
-	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", ShotRot.y);
-	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", ShotRot.x);
+	//DrawSphere3D(TEST_BULLETPOS, 3.0f, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), false);
 }
 
 //更新処理
@@ -148,10 +142,6 @@ void CPlayer::Update()
 	MV1SetPosition(HeadHndl, vHeadPos);
 	MV1SetRotationXYZ(HeadHndl, vHeadRot);
 	MV1SetScale(HeadHndl, m_vScale);
-
-	MV1SetPosition(ShotHndl, ShotPos);
-	MV1SetRotationXYZ(ShotHndl, ShotRot);
-	MV1SetScale(ShotHndl, m_vScale);
 
 
 	UpdateAnime();
@@ -175,11 +165,10 @@ void CPlayer::Step(CShotManager& cShotManager)
 	GetMousePoint(&MousePosX, &MousePosY);
 
 	VECTOR Move = MyMath::SubVec(VGet((float)MousePosX, (float)MousePosY, 0.0f), VGet((float)SCREEN_SIZE_X / 2.0f, (float)SCREEN_SIZE_Y / 2.0f, 0.0f));
-	VECTOR vOldRot = VGet(ShotRot.x, vHeadRot.y, 0.0f);
+	VECTOR vOldRot = VGet(vHeadRot.x, vHeadRot.y, 0.0f);
 
 	vHeadRot.y += (Move.x * 0.01f) * DX_PI_F / 180.0f;
-	ShotRot.y += (Move.x * 0.01f) * DX_PI_F / 180.0f;
-	ShotRot.x += (Move.y * 0.01f) * DX_PI_F / 180.0f;
+	vHeadRot.x += (Move.y * 0.01f) * DX_PI_F / 180.0f;
 
 	//砲台の角度制限(左右)
 	float Angle_Limit_L = m_vRot.y + (-90.0f * DX_PI_F / 180.0f);
@@ -188,13 +177,12 @@ void CPlayer::Step(CShotManager& cShotManager)
 	if (vHeadRot.y < Angle_Limit_L || vHeadRot.y > Angle_Limit_R)
 	{
 		vHeadRot.y = vOldRot.y;
-		ShotRot.y = vOldRot.y;
 	}
 	//砲台の角度制限(上下)
 	float Angle_Limit_UP = (20.0f * DX_PI_F / 180.0f);
-	if (ShotRot.x < 0.0f || ShotRot.x > Angle_Limit_UP)
+	if (vHeadRot.x < 0.0f || vHeadRot.x > Angle_Limit_UP)
 	{
-		ShotRot.x = vOldRot.x;
+		vHeadRot.x = vOldRot.x;
 	}
 
 	SetMousePoint(SCREEN_SIZE_X / 2, SCREEN_SIZE_Y / 2);
@@ -204,13 +192,11 @@ void CPlayer::Step(CShotManager& cShotManager)
 	{
 		m_vRot.y -= ROT_SPEED;
 		vHeadRot.y -= ROT_SPEED;
-		ShotRot.y -= ROT_SPEED;
 	}
 	else if (CInput::IsKeyKeep(KEY_INPUT_D))
 	{
 		m_vRot.y += ROT_SPEED;
 		vHeadRot.y += ROT_SPEED;
-		ShotRot.y += ROT_SPEED;
 	}
 
 	//キャラクターの移動
@@ -225,8 +211,8 @@ void CPlayer::Step(CShotManager& cShotManager)
 	}
 
 	m_vPos = NextPos;
-	ShotPos = m_vPos;
-	vHeadPos = m_vPos;
+	vHeadPos.x = m_vPos.x;
+	vHeadPos.z = m_vPos.z;
 
 	//入力したキー情報とプレイヤーの角度から、移動速度を求める
 	vSpeed.x = sin(m_vRot.y) * fSpd;
@@ -238,43 +224,35 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	if (CInput::IsKeyPush(KEY_INPUT_SPACE))
 	{
-		//戦車の発射筒座標を設定
-		VECTOR TankPos = m_vPos;
-
 		//弾の位置決定
-		VECTOR BulletPos = VGet(0.0f, 10.0f, -70.0f);
+		VECTOR BulletPos = VGet(0.0f, 0.0f, -30.0f);
 
 		//速度はプレイヤーと同じ方法で移動方向を決める
 		const float SHOT_SPEED = 5.0f;
 		VECTOR vSpd;
 		
-		vSpd.x = sinf(ShotRot.y) * -SHOT_SPEED;
-		vSpd.z = cosf(ShotRot.y) * -SHOT_SPEED;
+		vSpd.x = sinf(vHeadRot.y) * -SHOT_SPEED;
+		vSpd.z = cosf(vHeadRot.y) * -SHOT_SPEED;
 		vSpd.y = 0.0f;
 
 		//===================行列による弾の発射位置変更==============================
 		
 		//①座標を原点に戻す行列を作成
-		MATRIX mRevPosition = MGetTranslate(VScale(TankPos, -1.0f));
+		MATRIX mRevPosition = MGetTranslate(VScale(vHeadPos, -1.0f));
 		//②原点座標から元の座標に戻す行列を作成
-		MATRIX mPosition = MGetTranslate(TankPos);
-
-		//砲台の移動行列
-		MATRIX MoveMat = MGetTranslate(VGet(0.0f, 0.0f, fSpd));
+		MATRIX mPosition = MGetTranslate(vHeadPos);
 
 		//③弾の発射位置に移動する行列を準備
 		MATRIX BulletMat = MGetTranslate(BulletPos);
 
 		//④X軸回転準備
-		MATRIX rotX = MGetRotX(ShotRot.x);
+		MATRIX rotX = MGetRotX(vHeadRot.x);
 
 		//⑤Y軸回転準備
-		MATRIX rotY = MGetRotY(ShotRot.y);
+		MATRIX rotY = MGetRotY(vHeadRot.y);
 
 		//⑥原点座標から移動量を増やす
 		MATRIX matrix = MMult(mRevPosition, BulletMat);
-
-		matrix = MMult(matrix, MoveMat);
 
 		//⑦回転行列計算
 		/* X -> Y -> Zの順番で計算*/
@@ -285,14 +263,20 @@ void CPlayer::Step(CShotManager& cShotManager)
 		matrix = MMult(matrix, mPosition);
 
 		//⑨求めた行列を座標に反映
-		BulletPos = VTransform(BulletPos, matrix);
+		BulletPos = VTransform(vHeadPos, matrix);
 
 
 		//===================行列による弾の発射位置変更==============================
 
 		cShotManager.RequestPlayerShot(BulletPos, vSpd, 0.0f);
-		vHeadPos.z -= 4.0f;
+
+		vHeadPos.x -= (vSpd.x * 0.5f);
+		vHeadPos.z -= (vSpd.z * 0.5f);
+
+		TEST_BULLETPOS = BulletPos;
 	}
+
+	
 
 	//向いている方向チェック
 	CheckDir();

@@ -70,8 +70,6 @@ void CPlayScene::Init()
 	cCameraManager.SetNearFar(5.0f, 5000.0f);
 	//プレイヤー初期化
 	cPlayer.Init();
-	/*cTank_f.Init();
-	cTank_h.Init();*/
 	//敵初期化
 	cEnemyManager.Init();
 	//フィールド初期化
