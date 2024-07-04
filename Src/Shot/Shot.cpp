@@ -74,10 +74,15 @@ void CShot::Draw()
 
 		VECTOR vPos = m_vPos;
 		
+
+		DrawFormatString(500, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
+		DrawFormatString(500, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
+		DrawFormatString(500, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
 		/*DrawSphere3D(vPos, m_Radius, 16, GetColor(255, 255, 255), GetColor(255, 255, 255), FALSE);*/
 
 	}
 
+	
 }
 
 

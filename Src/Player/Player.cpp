@@ -109,8 +109,8 @@ void CPlayer::Draw()
 		return;
 	}
 
-	MV1DrawModel(m_iHndl);
-	//MV1DrawModel(HeadHndl);
+	/*MV1DrawModel(m_iHndl);
+	MV1DrawModel(HeadHndl);*/
 	MV1DrawModel(ShotHndl);
 
 	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
@@ -120,8 +120,13 @@ void CPlayer::Draw()
 	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
 	DrawFormatString(0, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
 
-	DrawFormatString(0, 60, GetColor(255, 0, 0), "回転値Y：%f", vHeadRot.y);
-	DrawFormatString(0, 75, GetColor(255, 0, 0), "回転値X：%f", ShotRot.x);
+	DrawFormatString(0, 45, GetColor(255, 0, 0), "発射筒X座標：%f", ShotPos.x);
+	DrawFormatString(0, 60, GetColor(255, 0, 0), "発射筒Y座標：%f", ShotPos.y);
+	DrawFormatString(0, 75, GetColor(255, 0, 0), "発射筒Z座標：%f", ShotPos.z);
+
+
+	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", ShotRot.y);
+	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", ShotRot.x);
 }
 
 //更新処理
@@ -233,39 +238,43 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 	if (CInput::IsKeyPush(KEY_INPUT_SPACE))
 	{
-		//戦車の打ち出し口から出るように座標を変更する
-		VECTOR BulletPos = vHeadPos;
+		//戦車の発射筒座標を設定
+		VECTOR TankPos = m_vPos;
 
-		//発射位置座標
-		VECTOR SetPos = VGet(0.0f, 5.0f, -70.0f);
+		//弾の位置決定
+		VECTOR BulletPos = VGet(0.0f, 10.0f, -70.0f);
 
 		//速度はプレイヤーと同じ方法で移動方向を決める
 		const float SHOT_SPEED = 5.0f;
 		VECTOR vSpd;
 		
-		vSpd.x = sinf(vHeadRot.y) * -SHOT_SPEED;
-		vSpd.z = cosf(vHeadRot.y) * -SHOT_SPEED;
+		vSpd.x = sinf(ShotRot.y) * -SHOT_SPEED;
+		vSpd.z = cosf(ShotRot.y) * -SHOT_SPEED;
 		vSpd.y = 0.0f;
 
 		//===================行列による弾の発射位置変更==============================
 		
 		//①座標を原点に戻す行列を作成
-		MATRIX mCenter = MGetTranslate(VScale(BulletPos, -1.0f));
+		MATRIX mRevPosition = MGetTranslate(VScale(TankPos, -1.0f));
 		//②原点座標から元の座標に戻す行列を作成
-		MATRIX mPosition = MGetTranslate(BulletPos);
+		MATRIX mPosition = MGetTranslate(TankPos);
+
+		//砲台の移動行列
+		MATRIX MoveMat = MGetTranslate(VGet(0.0f, 0.0f, fSpd));
 
 		//③弾の発射位置に移動する行列を準備
-		MATRIX mMove = MGetIdent();
-		mMove = MGetTranslate(SetPos); 
+		MATRIX BulletMat = MGetTranslate(BulletPos);
 
 		//④X軸回転準備
 		MATRIX rotX = MGetRotX(ShotRot.x);
 
 		//⑤Y軸回転準備
-		MATRIX rotY = MGetRotY(vHeadRot.y);
-		
+		MATRIX rotY = MGetRotY(ShotRot.y);
+
 		//⑥原点座標から移動量を増やす
-		MATRIX matrix = MMult(mCenter, mMove);
+		MATRIX matrix = MMult(mRevPosition, BulletMat);
+
+		matrix = MMult(matrix, MoveMat);
 
 		//⑦回転行列計算
 		/* X -> Y -> Zの順番で計算*/

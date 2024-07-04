@@ -84,6 +84,9 @@ void CShotManager::Draw()
 	{
 		cPlayerShot[i].Draw();
 	}
+
+	
+
 }
 
 
