@@ -268,15 +268,13 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		//===================行列による弾の発射位置変更==============================
 
-		cShotManager.RequestPlayerShot(BulletPos, vSpd, 0.0f);
+		cShotManager.RequestPlayerShot(BulletPos, vSpd, vHeadRot.x);
 
 		vHeadPos.x -= (vSpd.x * 0.5f);
 		vHeadPos.z -= (vSpd.z * 0.5f);
 
 		TEST_BULLETPOS = BulletPos;
 	}
-
-	
 
 	//向いている方向チェック
 	CheckDir();
