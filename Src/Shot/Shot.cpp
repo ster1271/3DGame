@@ -1,4 +1,5 @@
 #include "Shot.h"
+#include "../Player/Player.h"
 
 //----------------------------------------
 //コンストラクタ
@@ -89,7 +90,7 @@ void CShot::Draw()
 //----------------------------------------
 //毎フレーム呼ぶ処理
 //----------------------------------------
-void CShot::Step()
+void CShot::Step(VECTOR Pos)
 {
 	if (!isActive) return;
 
@@ -100,9 +101,10 @@ void CShot::Step()
 
 
 	//一定範囲を超えたら消す
-	float fLength =	1000.0f;
-	if (m_vPos.x > fLength || m_vPos.x < -fLength
-		|| m_vPos.z > fLength || m_vPos.z < -fLength
+	float fLength =	300;
+
+	if (m_vPos.x > Pos.x + fLength || m_vPos.x < Pos.x -fLength
+		|| m_vPos.z > Pos.z + fLength || m_vPos.z < Pos.z - fLength
 		|| m_vPos.y < 0.0f)
 	{
 		isActive = false;

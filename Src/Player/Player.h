@@ -19,11 +19,6 @@ private:
 		PLAYER_STATE_NUM
 	};
 
-	
-	int ShotHndl;			//発射筒のモデル
-	VECTOR ShotPos;			//発射筒の座標
-	VECTOR ShotRot;			//発射筒の回転値
-
 	int HeadHndl;			//頭部のモデル
 	VECTOR vHeadPos;		//頭部の座標
 	VECTOR vHeadRot;		//頭部の回転

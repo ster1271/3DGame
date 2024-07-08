@@ -23,7 +23,7 @@ public:
 	//I—¹ˆ—
 	void Exit();
 	//ŒJ‚è•Ô‚µs‚¤ˆ—
-	void Step();
+	void Step(VECTOR Pos);
 	//•`‰æˆ—
 	void Draw();
 

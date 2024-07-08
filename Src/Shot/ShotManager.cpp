@@ -64,11 +64,11 @@ void CShotManager::Exit()
 //------------------------------------
 //–ˆƒtƒŒ[ƒ€ŒÄ‚Ôˆ—
 //------------------------------------
-void CShotManager::Step()
+void CShotManager::Step(VECTOR Pos)
 {
 	for (int i = 0; i < PL_SHOT_NUM; i++)
 	{
-		cPlayerShot[i].Step();
+		cPlayerShot[i].Step(Pos);
 	}
 
 	

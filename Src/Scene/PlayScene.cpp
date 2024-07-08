@@ -130,7 +130,7 @@ void CPlayScene::Step()
 	{
 		cPlayer.Step(cShotManager);
 		cEnemyManager.Step();
-		cShotManager.Step();
+		cShotManager.Step(cPlayer.GetPosition());
 
 		//“–‚½‚è”»’è
 		CCollisionManager::CheckHitShotToEnemy(cEnemyManager, cShotManager);

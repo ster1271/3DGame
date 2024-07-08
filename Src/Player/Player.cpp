@@ -71,7 +71,6 @@ void CPlayer::Load()
 {
 	LoadModel(PLAYER_MODEL_FOUND_PATH);
 	HeadHndl = MV1LoadModel(PLAYER_MODEL_HEAD_PATH);
-	ShotHndl = MV1LoadModel(SHOT_MODEL_PATH);
 }
 
 //----------------------------
@@ -119,8 +118,6 @@ void CPlayer::Draw()
 
 	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", vHeadRot.y);
 	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", vHeadRot.x);
-
-	//DrawSphere3D(TEST_BULLETPOS, 3.0f, 16, GetColor(255, 0, 0), GetColor(255, 0, 0), false);
 }
 
 //更新処理
@@ -272,8 +269,6 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		vHeadPos.x -= (vSpd.x * 0.5f);
 		vHeadPos.z -= (vSpd.z * 0.5f);
-
-		TEST_BULLETPOS = BulletPos;
 	}
 
 	//向いている方向チェック

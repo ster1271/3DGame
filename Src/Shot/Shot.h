@@ -30,7 +30,7 @@ public:
 	void Exit();
 
 	//–ˆƒtƒŒ[ƒ€ŒÄ‚Ôˆ—
-	void Step();
+	void Step(VECTOR Pos);
 
 	//•`‰æˆ—
 	void Draw();
