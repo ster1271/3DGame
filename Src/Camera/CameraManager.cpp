@@ -55,7 +55,7 @@ void CCameraManager::Exit()
 //-------------------------
 //毎フレーム呼ぶ処理
 //-------------------------
-void CCameraManager::Step(VECTOR vForcus, float fRot)
+void CCameraManager::Step(VECTOR vForcus, VECTOR fRot)
 {
 	//カメラのタイプに合わせて、更新処理を変更する
 	switch (eCurrentCameraID)

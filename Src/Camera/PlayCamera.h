@@ -19,7 +19,7 @@ public:
 	void Init(VECTOR vPos, VECTOR vForcusPos, VECTOR vUp);
 
 	//毎フレーム呼ぶ処理
-	void Step(VECTOR vPorcus, float fRot);
+	void Step(VECTOR vForcus, VECTOR fRot);
 
 	//更新したデータを反映させる
 	void Update();

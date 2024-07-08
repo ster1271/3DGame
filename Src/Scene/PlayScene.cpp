@@ -149,7 +149,7 @@ void CPlayScene::Step()
 		cCameraManager.ChangeCamera(CCameraManager::CAMERA_ID_PALY);
 	}
 	//ƒJƒƒ‰XVˆ—
-	cCameraManager.Step(cPlayer.GetPosition(), cPlayer.GetRotateY());
+	cCameraManager.Step(cPlayer.GetPosition(), cPlayer.GetRotate());
 
 
 }

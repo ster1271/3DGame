@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Common.h"
+#include "../Scene/PlayScene.h"
 
 
 //定義関連
@@ -109,6 +110,8 @@ void CPlayer::Draw()
 	MV1DrawModel(m_iHndl);
 	MV1DrawModel(HeadHndl);
 
+
+	
 	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
 	CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
 
@@ -118,6 +121,7 @@ void CPlayer::Draw()
 
 	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", vHeadRot.y);
 	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", vHeadRot.x);
+		
 }
 
 //更新処理
@@ -270,20 +274,29 @@ void CPlayer::Step(CShotManager& cShotManager)
 		vHeadPos.x -= (vSpd.x * 0.5f);
 		vHeadPos.z -= (vSpd.z * 0.5f);
 	}
-
-	//向いている方向チェック
-	CheckDir();
 }
 
 //プレイヤーのめり込み修正
-void CPlayer::SetPos(VECTOR NewPos)
+void CPlayer::SetPosX(VECTOR NewPos)
 {
-	NextPos = NewPos;
+	NextPos.x = NewPos.x;
+}
+//プレイヤーのめり込み修正
+void CPlayer::SetPosY(VECTOR NewPos)
+{
+	NextPos.y = NewPos.y;
+}
+
+//プレイヤーのめり込み修正
+void CPlayer::SetPosZ(VECTOR NewPos)
+{
+	NextPos.z = NewPos.z;
 }
 
 
+
 //向いている方向チェック
-void CPlayer::CheckDir()
+void CPlayer::CheckDir(bool* Dir)
 {
 	if (NextPos.x > m_vPos.x)
 	{

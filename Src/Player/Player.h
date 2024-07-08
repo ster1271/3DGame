@@ -25,8 +25,6 @@ private:
 	VECTOR vSpeed;			//移動速度
 	tagPlayerState eState;	//プレイヤーの状態
 
-	VECTOR TEST_BULLETPOS;
-
 public:
 	//コンストラクタ・デストラクタ
 	CPlayer();
@@ -55,13 +53,7 @@ public:
 	void Step(CShotManager& cShotManager);
 
 	//向いている方向チェック
-	void CheckDir();
-
-	//方向取得
-	bool GetDir(int iD)
-	{
-		return Dir[iD];
-	}
+	void CheckDir(bool *Dir);
 
 	//座標取得
 	inline VECTOR GetPosition() { return m_vPos; }
@@ -70,11 +62,19 @@ public:
 	inline VECTOR GetNextPos() { return NextPos; }
 
 	//Y軸角度取得
+	inline VECTOR GetRotate() { return m_vRot; }
+
+	//Y軸角度取得
+
 	inline float GetRotateY() { return m_vRot.y; }
 	
 
 	//プレイヤーの更新座標取得
-	void SetPos(VECTOR NewPos);
+	void SetPosX(VECTOR NewPos);
+	//プレイヤーの更新座標取得
+	void SetPosY(VECTOR NewPos);
+	//プレイヤーの更新座標取得
+	void SetPosZ(VECTOR NewPos);
 
 
 };

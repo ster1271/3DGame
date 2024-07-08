@@ -34,7 +34,7 @@ public:
 	void Exit();
 
 	//XVˆ—
-	void Step(VECTOR vForcus, float fRot);
+	void Step(VECTOR vForcus, VECTOR fRot);
 
 	//•`‰æ
 	void Draw();

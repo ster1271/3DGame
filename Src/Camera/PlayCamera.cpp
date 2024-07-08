@@ -47,11 +47,11 @@ void CPlayCamera::Init(VECTOR vPos, VECTOR vForcusPos, VECTOR vUp)
 }
 
 //–ˆƒtƒŒ[ƒ€ŒÄ‚Ôˆ—
-void CPlayCamera::Step(VECTOR vForcus, float fRot)
+void CPlayCamera::Step(VECTOR vForcus, VECTOR fRot)
 {
 	VECTOR vDir;
-	vDir.x = sinf(fRot) * CAMERA_LENGTH;
-	vDir.z = cosf(fRot) * CAMERA_LENGTH;
+	vDir.x = sinf(fRot.y) * CAMERA_LENGTH;
+	vDir.z = cosf(fRot.y) * CAMERA_LENGTH;
 
 	//Ž‹“_‚Ì‚‚³‚ÍŒÅ’è
 	vDir.y = CAMERA_OFFSET_Y;
