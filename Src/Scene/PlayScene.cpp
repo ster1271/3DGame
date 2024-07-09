@@ -51,6 +51,7 @@ void CPlayScene::Draw()
 	{
 		cSky.Draw();
 		cGround.Draw();
+		cBox.Draw();
 		cPlayer.Draw();
 		cEnemyManager.Draw();
 		cShotManager.Draw();
@@ -76,6 +77,8 @@ void CPlayScene::Init()
 	cGround.Init();
 	//天球初期化
 	cSky.Init();
+	//ボックス初期化
+	cBox.Init();
 	//弾初期化
 	cShotManager.Init();
 
@@ -88,6 +91,7 @@ void CPlayScene::Init()
 //-----------------------------------
 void CPlayScene::Exit()
 {
+	cBox.Exit();
 	cCameraManager.Exit();
 	cPlayer.Exit();
 	cEnemyManager.Exit();
@@ -102,6 +106,7 @@ void CPlayScene::Exit()
 //-----------------------------------
 void CPlayScene::Load()
 {
+	cBox.Load();
 	cPlayer.Load();
 	cEnemyManager.Load();
 	cShotManager.Load();
@@ -124,6 +129,7 @@ void CPlayScene::Step()
 	//天球処理
 	cSky.Step(cPlayer.GetPosition(), cPlayer.GetRotateY());
 	cSky.Loop();
+	cBox.Update();
 
 	//プレイヤー更新処理
 	if (cCameraManager.GetCameraID() == CCameraManager::CAMERA_ID_PALY)

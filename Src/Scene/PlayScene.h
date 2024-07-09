@@ -5,6 +5,7 @@
 #include "../Player/Player.h"
 #include "../Object/Ground/Ground.h"
 #include "../Object/Sky/Sky.h"
+#include "../Object/Box/Box.h"
 #include "../Shot/ShotManager.h"
 #include "../Enemy/EnemyManager.h"
 #include "../CollisionManager/CollisionManager.h"
@@ -26,6 +27,7 @@ private:
 	CPlayer cPlayer;						//プレイヤー
 	tagPLAY_SCENE eSceneID;					//シーン保存
 	CGround cGround;						//フィールド
+	CBox cBox;								//ボックス
 	CSky cSky;								//天球
 	CShotManager cShotManager;				//弾マネージャー
 	CEnemyManager cEnemyManager;			//敵マネージャー

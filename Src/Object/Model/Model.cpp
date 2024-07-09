@@ -8,12 +8,17 @@ CModel::CModel()
 {
 	memset(&m_sAnimeData, 0, sizeof(ANIM_DATA));
 	memset(&m_vPos, 0, sizeof(VECTOR));
+	memset(&m_HarfPos, 0, sizeof(VECTOR));
 	memset(&m_vRot, 0, sizeof(VECTOR));
 	memset(&m_vScale, 0, sizeof(VECTOR));
 	memset(&m_OldPos, 0, sizeof(VECTOR));
 	memset(&NextPos, 0, sizeof(VECTOR));
 	MousePosX = MousePosY = 0;
 
+	for (int i = 0; i < 6; i++)
+	{
+		Dir[i] = false;
+	}
 
 	m_iHndl = -1;
 
