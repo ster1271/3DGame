@@ -3,6 +3,7 @@
 #include "../Shot/ShotManager.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Player/Player.h"
+#include "../Object/Box/Box.h"
 
 
 class CCollisionManager
@@ -12,5 +13,5 @@ public:
 	static void CheckHitShotToEnemy(CEnemyManager& cEnemyManager, CShotManager& cShotManager);
 
 	//•¨‘Ì‚Æ‚Ì“–‚½‚è”»’è
-	static void HitToObject(CPlayer& cPlayer, VECTOR ObjectPos, VECTOR ObjectSize);
+	static void HitToObject(CPlayer& cPlayer, CBox& cBox);
 };

@@ -25,6 +25,7 @@ CPlayer::CPlayer()
 	memset(&vSpeed, 0, sizeof(VECTOR));
 	memset(&vHeadPos, 0, sizeof(VECTOR));
 	memset(&vHeadRot, 0, sizeof(VECTOR));
+	memset(&vSize, 0, sizeof(VECTOR));
 	HeadHndl = -1;
 
 	eState = PLAYER_STATE_NORMAL;
@@ -59,6 +60,7 @@ void CPlayer::Init(VECTOR Pos, VECTOR Rot)
 	NextPos = m_vPos;
 	m_vRot = Rot;
 	vHeadRot = Rot;
+	vSize = VGet(40.0f, 50.0f, 40.0f);
 	memset(&vSpeed, 0, sizeof(VECTOR));
 	vHeadPos = VGet(0.0f, 23.0f, 0.0f);
 	eState = PLAYER_STATE_NORMAL;
@@ -112,8 +114,8 @@ void CPlayer::Draw()
 
 
 	
-	CDraw3D::DrawBox3D(m_vPos, VGet(40.0f, 50.0f, 40.0f));
-	CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
+	CDraw3D::DrawBox3D(m_vPos, vSize);
+	//CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
 
 	DrawFormatString(0, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
 	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);

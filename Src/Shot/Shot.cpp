@@ -1,6 +1,7 @@
 #include "Shot.h"
 #include "../Player/Player.h"
 
+
 //----------------------------------------
 //コンストラクタ
 //----------------------------------------
@@ -101,7 +102,7 @@ void CShot::Step(VECTOR Pos)
 
 
 	//一定範囲を超えたら消す
-	float fLength =	300;
+	float fLength =	600;
 
 	if (m_vPos.x > Pos.x + fLength || m_vPos.x < Pos.x -fLength
 		|| m_vPos.z > Pos.z + fLength || m_vPos.z < Pos.z - fLength
@@ -112,7 +113,7 @@ void CShot::Step(VECTOR Pos)
 
 	//座標更新
 	MV1SetPosition(iHndl, m_vPos);
-	MV1SetScale(iHndl, VGet(3.0f, 3.0f, 3.0f));
+	MV1SetScale(iHndl, VGet(0.05f, 0.05f, 0.05f));
 }
 
 

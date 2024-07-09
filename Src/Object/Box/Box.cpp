@@ -2,20 +2,28 @@
 
 static const char BOX_PATH[] = { "Data/Box/Box.x" };
 
+CBox::CBox()
+{
+	for (int i = 0; i < MAX_NUM; i++)
+	{
+		iHndlCopy[i] = -1;						//モデルのコピー
+		m_Pos[i] = VGet(0.0f,0.0f, 0.0f);		//ボックスの座標
+		IsActive[i] = false;
+	}
+	m_Size = VGet(0.0f,0.0f, 0.0f);				//ボックスのサイズ
+}
 
 void CBox::Init()
 {
 	for (int i = 0; i < MAX_NUM; i++)
 	{
 		iHndlCopy[i] = -1;
-	}
-
-	for (int i = 0; i < MAX_NUM; i++)
-	{
 		m_Pos[i] = VGet(50.0f, 30.0f, 50.0f * i);
+		IsActive[i] = true;
 	}
 
 	m_vScale = VGet(0.3f, 0.3f, 0.3f);
+	m_Size = VGet(60.0f, 60.0f, 60.0f);
 }
 
 void CBox::Load()
@@ -48,9 +56,13 @@ void CBox::Exit()
 //モデルの描画
 void CBox::Draw()
 {
+
 	for (int i = 0; i < MAX_NUM; i++)
 	{
-		MV1DrawModel(iHndlCopy[i]);
+		if (IsActive[i] == true)
+		{
+			MV1DrawModel(iHndlCopy[i]);
+		}
 	}
 }
 

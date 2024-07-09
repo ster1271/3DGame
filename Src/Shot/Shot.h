@@ -2,7 +2,7 @@
 #include <DxLib.h>
 
 const int SHOTRADIUS	(1);
-const float GRAVITY		(0.03f);
+const float GRAVITY		(0.01f);
 
 class CShot
 {

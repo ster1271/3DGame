@@ -140,7 +140,7 @@ void CPlayScene::Step()
 
 		//“–‚½‚è”»’è
 		CCollisionManager::CheckHitShotToEnemy(cEnemyManager, cShotManager);
-		CCollisionManager::HitToObject(cPlayer, VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
+		CCollisionManager::HitToObject(cPlayer, cBox);
 
 		cPlayer.Update();
 	}
