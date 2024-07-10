@@ -2,7 +2,7 @@
 #include "vector"
 #include "../Model/Model.h"
 
-const int MAX_NUM = 20;
+const int MAX_NUM = 100;
 
 class CBox : public CModel
 {

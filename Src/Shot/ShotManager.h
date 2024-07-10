@@ -2,7 +2,7 @@
 #include "Shot.h"
 
 
-#define PL_SHOT_NUM	(50)
+#define PL_SHOT_NUM	(3)
 
 class CShotManager
 {

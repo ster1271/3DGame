@@ -1,12 +1,12 @@
 #include "Box.h"
 
-static const char BOX_PATH[] = { "Data/Box/Box.x" };
+static const char BOX_PATH[] = { "Data/Box/Box1.x" };
 
 CBox::CBox()
 {
 	for (int i = 0; i < MAX_NUM; i++)
 	{
-		iHndlCopy[i] = -1;						//モデルのコピー
+		iHndlCopy[i] = 0;						//モデルのコピー
 		m_Pos[i] = VGet(0.0f,0.0f, 0.0f);		//ボックスの座標
 		IsActive[i] = false;
 	}
@@ -15,12 +15,33 @@ CBox::CBox()
 
 void CBox::Init()
 {
-	for (int i = 0; i < MAX_NUM; i++)
+	int L_Count = 0;
+	int F_Count = 0;
+	//右の壁
+	for (int R_BoxNum = 0; R_BoxNum < MAX_NUM / 4; R_BoxNum++)
 	{
-		iHndlCopy[i] = -1;
-		m_Pos[i] = VGet(50.0f, 30.0f, 50.0f * i);
-		IsActive[i] = true;
+		iHndlCopy[R_BoxNum] = -1;
+		m_Pos[R_BoxNum] = VGet(300.0f, 30.0f, (50.0f * R_BoxNum) + 100.0f);
+		IsActive[R_BoxNum] = true;
 	}
+	//左の壁
+	for (int L_BoxNum = MAX_NUM / 4; L_BoxNum < MAX_NUM / 2; L_BoxNum++)
+	{
+		iHndlCopy[L_BoxNum] = -1;
+		m_Pos[L_BoxNum] = VGet(-300.0f, 30.0f, (50.0f * L_Count) + 100.0f);
+		IsActive[L_BoxNum] = true;
+		L_Count++;
+	}
+	//手前の壁
+	for (int F_BoxNum = MAX_NUM / 2; F_BoxNum < 75; F_BoxNum++)
+	{
+		iHndlCopy[F_BoxNum] = -1;
+		m_Pos[F_BoxNum] = VGet((50.0f * F_Count) - 300.0f, 30.0f, 50.0f * (MAX_NUM / 4));
+		IsActive[F_BoxNum] = true;
+		F_Count++;
+	}
+
+	//奥の壁
 
 	m_vScale = VGet(0.3f, 0.3f, 0.3f);
 	m_Size = VGet(60.0f, 60.0f, 60.0f);

@@ -50,7 +50,7 @@ void CPlayScene::Draw()
 	if (eSceneID == PLAY_SCENE_LOOP)
 	{
 		cSky.Draw();
-		cGround.Draw();
+		//cGround.Draw();
 		cBox.Draw();
 		cPlayer.Draw();
 		cEnemyManager.Draw();
@@ -68,7 +68,7 @@ void CPlayScene::Init()
 {
 	//カメラ初期化
 	cCameraManager.Init();
-	cCameraManager.SetNearFar(5.0f, 5000.0f);
+	cCameraManager.SetNearFar(5.0f, 10000.0f);
 	//プレイヤー初期化
 	cPlayer.Init();
 	//敵初期化

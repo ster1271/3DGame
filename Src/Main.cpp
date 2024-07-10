@@ -31,6 +31,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//マウスの表示をなくす
 	SetMouseDispFlag(FALSE);
+
+	//ライト設定
+	SetUseLighting(FALSE);
 	
 	//-----------------------------------------
 	//一番最初に１回だけやる処理をここに書く
