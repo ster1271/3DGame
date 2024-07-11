@@ -4,7 +4,7 @@
 //コンストラクタ
 CSky::CSky()
 {
-
+	m_Scale = VGet(0.0f, 0.0f, 0.0f);
 }
 
 //デストラクタ
@@ -17,7 +17,7 @@ CSky::~CSky()
 void CSky::Init()
 {
 	cPos = VGet(0.0f, 0.0f, 0.0f);
-	//iHndl = MV1LoadModel("Data/Sky/Sky.x");
+	m_Scale = VGet(2.0f, 2.0f, 2.0f);
 	iHndl = MV1LoadModel("Data/Sky/きれいな空(・ω・)_by西山.x");
 
 	MV1SetPosition(iHndl, cPos);
@@ -50,6 +50,7 @@ void CSky::Loop()
 {
 	MV1SetPosition(iHndl, cPos);
 	MV1SetRotationXYZ(iHndl, cRotate);
+	MV1SetScale(iHndl, m_Scale);
 }
 
 //移動処理

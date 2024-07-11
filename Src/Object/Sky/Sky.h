@@ -3,6 +3,9 @@
 
 class CSky :public CObject
 {
+private:
+	VECTOR m_Scale;
+
 public:
 	//コンストラクタ・デストラクタ
 	CSky();

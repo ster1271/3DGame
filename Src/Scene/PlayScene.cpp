@@ -50,7 +50,7 @@ void CPlayScene::Draw()
 	if (eSceneID == PLAY_SCENE_LOOP)
 	{
 		cSky.Draw();
-		//cGround.Draw();
+		cGround.Draw();
 		cBox.Draw();
 		cPlayer.Draw();
 		cEnemyManager.Draw();
