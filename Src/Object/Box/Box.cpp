@@ -1,6 +1,6 @@
 #include "Box.h"
 
-static const char BOX_PATH[] = { "Data/Box/Box1.x" };
+static const char BOX_PATH[] = { "Data/Box/NewBox.x" };
 
 CBox::CBox()
 {

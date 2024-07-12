@@ -2,6 +2,7 @@
 #include <DxLib.h>
 
 #include "../Camera/CameraManager.h"
+#include "../Fade/Fade.h"
 #include "../Player/Player.h"
 #include "../Object/Ground/Ground.h"
 #include "../Object/Sky/Sky.h"
