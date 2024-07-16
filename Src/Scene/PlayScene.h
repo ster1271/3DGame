@@ -7,6 +7,7 @@
 #include "../Object/Ground/Ground.h"
 #include "../Object/Sky/Sky.h"
 #include "../Object/Box/Box.h"
+#include "../target/target.h"
 #include "../Shot/ShotManager.h"
 #include "../Enemy/EnemyManager.h"
 #include "../CollisionManager/CollisionManager.h"
@@ -30,6 +31,7 @@ private:
 	CGround cGround;						//フィールド
 	CBox cBox;								//ボックス
 	CSky cSky;								//天球
+	CTarget cTarget;						//的
 	CShotManager cShotManager;				//弾マネージャー
 	CEnemyManager cEnemyManager;			//敵マネージャー
 

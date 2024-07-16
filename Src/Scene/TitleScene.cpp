@@ -27,7 +27,6 @@ CTitleScene::~CTitleScene()
 void CTitleScene::Init()
 {
 	memset(&TitleHndl, -1, sizeof(TitleHndl));
-	a = 255;
 	Trans = Null;
 
 	eSceneID = TITLE_SCENE_LAOD;
@@ -74,14 +73,11 @@ void CTitleScene::Step()
 //-------------------------------------
 void CTitleScene::Draw()
 {
-	//DrawGraph(0, 0, TitleHndl, true);
+	DrawGraph(0, 0, TitleHndl, true);
 
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, a);
-	DrawBox(0, 0, 1280, 720, GetColor(255, 0, 0), true);
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
-	DrawString(0, 0, "タイトル画面です", GetColor(255, 255, 255));
-	DrawString(0, 15, "Enterでシーン移動", GetColor(255, 255, 255));
+	//DrawString(0, 0, "タイトル画面です", GetColor(255, 255, 255));
+	//DrawString(0, 15, "Enterでシーン移動", GetColor(255, 255, 255));
 
 }
 
@@ -93,5 +89,6 @@ void CTitleScene::Exit()
 	if (TitleHndl != -1)
 	{
 		DeleteGraph(TitleHndl);
-	}
+	} 
+	eSceneID = TITLE_SCENE_INIT;
 }

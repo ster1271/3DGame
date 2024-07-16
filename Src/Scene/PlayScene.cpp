@@ -52,8 +52,8 @@ void CPlayScene::Draw()
 		cSky.Draw();
 		cGround.Draw();
 		cBox.Draw();
+		cTarget.Draw();
 		cPlayer.Draw();
-		cEnemyManager.Draw();
 		cShotManager.Draw();
 		cCameraManager.Draw();
 
@@ -71,14 +71,14 @@ void CPlayScene::Init()
 	cCameraManager.SetNearFar(5.0f, 10000.0f);
 	//プレイヤー初期化
 	cPlayer.Init();
-	//敵初期化
-	cEnemyManager.Init();
 	//フィールド初期化
 	cGround.Init();
 	//天球初期化
 	cSky.Init();
 	//ボックス初期化
 	cBox.Init();
+	//的初期化
+	cTarget.Init();
 	//弾初期化
 	cShotManager.Init();
 
@@ -92,9 +92,9 @@ void CPlayScene::Init()
 void CPlayScene::Exit()
 {
 	cBox.Exit();
+	cTarget.Exit();
 	cCameraManager.Exit();
 	cPlayer.Exit();
-	cEnemyManager.Exit();
 	cShotManager.Exit();
 
 	eSceneID = PLAY_SCENE_INIT;
@@ -107,8 +107,8 @@ void CPlayScene::Exit()
 void CPlayScene::Load()
 {
 	cBox.Load();
+	cTarget.Load();
 	cPlayer.Load();
-	cEnemyManager.Load();
 	cShotManager.Load();
 
 	CSoundManager::Play(CSoundManager::SOUNDID_BGM, DX_PLAYTYPE_LOOP);
@@ -121,7 +121,7 @@ void CPlayScene::Load()
 //-----------------------------------
 void CPlayScene::Step()
 {
-	if (CInput::IsKeyPush(KEY_INPUT_RETURN))
+	if (cTarget.GetCount() == 0)
 	{
 		eSceneID = PLAY_SCENE_END;
 	}
@@ -130,16 +130,18 @@ void CPlayScene::Step()
 	cSky.Step(cPlayer.GetPosition(), cPlayer.GetRotateY());
 	cSky.Loop();
 	cBox.Update();
+	cTarget.Step();
+	cTarget.UpDate();
 
 	//プレイヤー更新処理
 	if (cCameraManager.GetCameraID() == CCameraManager::CAMERA_ID_PALY)
 	{
 		cPlayer.Step(cShotManager);
-		cEnemyManager.Step();
 		cShotManager.Step(cPlayer.GetPosition());
 
 		//当たり判定
 		CCollisionManager::CheckHitShotToEnemy(cEnemyManager, cShotManager);
+		CCollisionManager::CheckHitShotToTarget(cTarget, cShotManager);
 		CCollisionManager::HitToObject(cPlayer, cBox);
 
 		cPlayer.Update();

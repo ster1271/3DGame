@@ -16,8 +16,7 @@ private:
 	tagTITLE_SCENE eSceneID;
 
 	int TitleHndl;
-	int a;
-	
+
 	enum TRANSPARENCY
 	{
 		Null,

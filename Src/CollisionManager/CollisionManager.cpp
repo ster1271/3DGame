@@ -44,6 +44,57 @@
 	 }
 }
 
+ //的との当たり判定
+ void CCollisionManager::CheckHitShotToTarget(CTarget& cTarget, CShotManager& cShotManager)
+ {
+	 for (int shotIndex = 0; shotIndex < PL_SHOT_NUM; shotIndex++)
+	 {
+		 //弾情報を取得し、発射されていなければ次へ
+		 //shotManagerからCShotを取得している
+		 //プレエイヤーの弾情報をとってくる
+		 CShot& cPShot = cShotManager.GetPlayerShot(shotIndex);
+		 if (!cPShot.IsActive()) continue;
+
+		 for (int TargetIndex = 0; TargetIndex < TARGET_NUM; TargetIndex++)
+		 {
+			 //エネミーの情報をとってくる
+			 VECTOR TargetPos[TARGET_NUM];
+			 TargetPos[TargetIndex] = cTarget.GetPos(TargetIndex);
+			 
+			 //フラグ取得
+			 bool IsActive[TARGET_NUM];
+			 IsActive[TargetIndex] = cTarget.GetActive(TargetIndex);
+
+			 float TargetRadius = cTarget.GetRadius();
+
+
+			 //新しい変数を追加
+			 VECTOR vShotPos, vEnemyPos;
+			 float fShotRadius, fEnemyRadius;
+
+			 //それぞれの座標を取得し変数に入れる
+			 cPShot.GetPosition(vShotPos);
+
+			 //それぞれの半径を取得し変数に入れる
+			 fShotRadius = cPShot.GetRadius();
+
+			 if (IsActive[TargetIndex] == false)
+			 {
+				 continue;
+			 }
+
+			 //球と球の当たり判定
+			 if (CCollision::CheckHitSphereToSphere(vShotPos, fShotRadius, TargetPos[TargetIndex], TargetRadius))
+			 {
+				 //ここまでくれば当たった
+				 cTarget.SetActive(TargetIndex);
+ 				 cPShot.HitCalc();
+			 }
+		 }
+	 }
+ }
+
+
 
  //物体との当たり判定
  void CCollisionManager::HitToObject(CPlayer& cPlayer, CBox& cBox)

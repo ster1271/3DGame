@@ -114,15 +114,15 @@ void CPlayer::Draw()
 
 
 	
-	CDraw3D::DrawBox3D(m_vPos, vSize);
+	//CDraw3D::DrawBox3D(m_vPos, vSize);
 	//CDraw3D::DrawBox3D(VGet(0.0f, 30.0f, 100.0f), VGet(20.0f, 20.0f, 20.0f));
 
-	DrawFormatString(0, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
+	/*DrawFormatString(0, 0, GetColor(255, 0, 0), "X座標：%f", m_vPos.x);
 	DrawFormatString(0, 15, GetColor(255, 0, 0), "Y座標：%f", m_vPos.y);
 	DrawFormatString(0, 30, GetColor(255, 0, 0), "Z座標：%f", m_vPos.z);
 
 	DrawFormatString(0, 90, GetColor(255, 0, 0), "回転値Y：%f", vHeadRot.y);
-	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", vHeadRot.x);
+	DrawFormatString(0, 105, GetColor(255, 0, 0), "回転値X：%f", vHeadRot.x);*/
 		
 }
 
@@ -182,7 +182,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 		vHeadRot.y = vOldRot.y;
 	}
 	//砲台の角度制限(上下)
-	float Angle_Limit_UP = (20.0f * DX_PI_F / 180.0f);
+	float Angle_Limit_UP = (30.0f * DX_PI_F / 180.0f);
 	if (vHeadRot.x < 0.0f || vHeadRot.x > Angle_Limit_UP)
 	{
 		vHeadRot.x = vOldRot.x;
@@ -213,6 +213,7 @@ void CPlayer::Step(CShotManager& cShotManager)
 		fSpd = MOVE_SPEED;
 	}
 
+	//判定後の座標を代入する
 	m_vPos = NextPos;
 	vHeadPos.x = m_vPos.x;
 	vHeadPos.z = m_vPos.z;
@@ -273,8 +274,8 @@ void CPlayer::Step(CShotManager& cShotManager)
 
 		cShotManager.RequestPlayerShot(BulletPos, vSpd, vHeadRot.x);
 
-		vHeadPos.x -= (vSpd.x * 0.5f);
-		vHeadPos.z -= (vSpd.z * 0.5f);
+		vHeadPos.x -= (vSpd.x * 0.3f);
+		vHeadPos.z -= (vSpd.z * 0.3f);
 	}
 }
 

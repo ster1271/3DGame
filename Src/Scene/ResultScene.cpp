@@ -3,7 +3,7 @@
 #include "ResultScene.h"
 #include "../Input/Input.h"
 
-#define RESULT_PATH		("")
+#define RESULT_PATH		("Data/Result/result.png")
 
 //-------------------------------------
 //コンストラクタ
@@ -12,6 +12,7 @@ CResultScene::CResultScene()
 {
 	//とりあえず初期化に移動させる
 	eSceneID = RESULT_SCENE_INIT;
+	ResultHndl = -1;
 }
 //-------------------------------------
 //デストラクタ
@@ -74,14 +75,11 @@ void CResultScene::Step()
 //-------------------------------------
 void CResultScene::Draw()
 {
-	//DrawGraph(0, 0, ResultHndl, true);
+	DrawGraph(0, 0, ResultHndl, true);
 
 	
-	DrawBox(0, 0, 1280, 720, GetColor(255, 0, 0), true);
-	
-
-	DrawString(0, 0, "リザルト画面です", GetColor(255, 255, 255));
-	DrawString(0, 15, "Enterでシーン移動", GetColor(255, 255, 255));
+	//DrawString(0, 0, "リザルト画面です", GetColor(255, 255, 255));
+	//DrawString(0, 15, "Enterでシーン移動", GetColor(255, 255, 255));
 
 }
 
@@ -94,4 +92,5 @@ void CResultScene::Exit()
 	{
 		DeleteGraph(ResultHndl);
 	}
+	eSceneID = RESULT_SCENE_INIT;
 }
